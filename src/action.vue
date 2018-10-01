@@ -6,6 +6,7 @@
     ref="anchor"
     @click="onClick" 
     class="elder__navigation-component"
+    :exact="item.exact"
     :active-class="activeClass"
     :class="[item.class, isActive ? activeClass : '']"
   >
@@ -68,7 +69,7 @@ export default {
   justify-content: space-between;
   padding: 10px 20px;
   font: inherit;
-  font-weight: 500;
+  font-weight: bold;
   border: none;
   background-color: transparent;
   text-decoration: none;

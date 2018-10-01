@@ -108,7 +108,7 @@ export default {
   flex-wrap: wrap;
   align-items: center;
 
-  padding: 10px 0;
+  padding: 1rem 0;
 
   &-logo {
     color: $primary;
