@@ -78,7 +78,7 @@ export default {
     },
     navStyle() {
       return {
-        padding: this.padding + 'px',
+        padding: this.padding + 'px 0',
       }
     },
     hasRouterLink() {
