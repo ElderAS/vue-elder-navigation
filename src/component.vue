@@ -1,6 +1,10 @@
 <template>
   <div class="elder__navigation-wrapper">
-    <nav class="elder__navigation" :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }">
+    <nav 
+      class="elder__navigation" 
+      :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }"
+      :style="navStyle"
+    >
       <node-component :item="logoItem" ref="item" class="elder__navigation-logo">
         <slot name="logo">
           <img v-if="logo" :src="logo" :style="{ height: height + 'px' }">
@@ -37,6 +41,10 @@ export default {
       type: Number,
       default: 60,
     },
+    padding: {
+      type: Number,
+      default: 20,
+    },
     title: String,
     action: [Object, String, Function],
     items: {
@@ -66,6 +74,11 @@ export default {
     logoItem() {
       return {
         action: this.action,
+      }
+    },
+    navStyle() {
+      return {
+        padding: this.padding + 'px',
       }
     },
     hasRouterLink() {
@@ -107,8 +120,6 @@ export default {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-
-  padding: 1rem 0;
 
   &-logo {
     color: $primary;
