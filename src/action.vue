@@ -2,7 +2,6 @@
   <component 
     :is="type" 
     :to="item.action" 
-    :href="item.action"
     ref="anchor"
     @click="onClick" 
     class="elder__navigation-component"
@@ -20,6 +19,8 @@
 
 <script>
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
+import AnchorComponent from './action-types/anchor'
+import ButtonComponent from './action-types/button'
 
 export default {
   props: {
@@ -29,11 +30,11 @@ export default {
     type() {
       switch (typeof this.item.action) {
         case 'string':
-          return 'a'
+          return 'anchor-component'
         case 'object':
           return 'router-link'
         default:
-          return 'button'
+          return 'button-component'
       }
     },
     activeClass() {
@@ -55,6 +56,8 @@ export default {
   },
   components: {
     Fa,
+    AnchorComponent,
+    ButtonComponent,
   },
 }
 </script>
