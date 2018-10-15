@@ -7,7 +7,7 @@
 <script>
 export default {
   props: {
-    to: Object,
+    to: Function,
   },
   methods: {
     onClick() {
