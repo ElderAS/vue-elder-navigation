@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     setDropdown() {
-      if (!this.item.items) return null
+      if (!this.item.items || !this.item.items.length) return null
       this.dropdown = Object.assign(
         {
           disabled: this.isResponsive,
