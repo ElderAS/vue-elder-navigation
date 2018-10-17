@@ -53,7 +53,7 @@ export default {
         {
           disabled: this.isResponsive,
           html: this.$refs.dropdown.cloneNode(true),
-          theme: 'light',
+          theme: 'elder-navigation-light',
           interactive: true,
           arrow: true,
           arrowType: 'round',
@@ -110,7 +110,7 @@ export default {
 }
 
 .tippy-tooltip {
-  &.light-theme {
+  &.elder-navigation-light-theme {
     background-color: white;
     padding: 10px;
     box-shadow: 0 -5px 25px -5px rgba(0, 0, 0, 0.2);
