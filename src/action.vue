@@ -2,6 +2,7 @@
   <component 
     :is="type" 
     :to="item.action" 
+    :target="item.target"
     ref="anchor"
     @click="onClick" 
     class="elder__navigation-component"
