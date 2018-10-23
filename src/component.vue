@@ -7,7 +7,7 @@
     >
       <node-component :item="logoItem" ref="item" class="elder__navigation-logo">
         <slot name="logo">
-          <img v-if="logo" :src="logo" :style="{ height: height + 'px' }">
+          <img v-if="logo" :src="logo" :style="{ maxHeight: height + 'px' }">
         </slot>
       </node-component>
 
