@@ -1,6 +1,6 @@
 <template>
   <div class="elder__navigation-node">
-    <action-component :item="item" v-tippy="dropdown">
+    <action-component :item="item" v-tippy="dropdown" @click="$emit('click')">
       <slot></slot>
     </action-component>
 
@@ -10,7 +10,8 @@
           <action-component 
             v-for="(item, index) in item.items"
             :key="index"
-            :item="item" 
+            :item="item"
+            @click="$emit('click')"
           />
         </div>
         <div v-if="item.background" class="elder__navigation-background" :style="{ backgroundImage: 'url(' + item.background + ')'}"></div>

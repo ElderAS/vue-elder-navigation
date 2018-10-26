@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     onClick() {
+      this.$emit('click')
       if (typeof this.item.action === 'function') this.item.action()
     },
   },

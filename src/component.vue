@@ -5,7 +5,7 @@
       :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }"
       :style="navStyle"
     >
-      <node-component :item="logoItem" ref="item" class="elder__navigation-logo">
+      <node-component :item="logoItem" ref="item" class="elder__navigation-logo" @click="isOpen = false">
         <slot name="logo">
           <img v-if="logo" :src="logo" :style="{ maxHeight: height + 'px' }">
         </slot>
@@ -21,6 +21,7 @@
           :key="index"
           :item="item"
           :is-responsive="isResponsive"
+          @click="isOpen = false"
         />
         <slot />
       </div>
