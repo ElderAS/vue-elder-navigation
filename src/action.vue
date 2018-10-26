@@ -4,7 +4,7 @@
     :to="item.action" 
     :target="item.target"
     ref="anchor"
-    @click="onClick" 
+    @click.native="onClick" 
     class="elder__navigation-component"
     :exact="item.exact"
     :active-class="activeClass"
@@ -53,7 +53,6 @@ export default {
   methods: {
     onClick() {
       this.$emit('click')
-      if (typeof this.item.action === 'function') this.item.action()
     },
   },
   components: {
