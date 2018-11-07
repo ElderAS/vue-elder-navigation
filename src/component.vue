@@ -1,13 +1,13 @@
 <template>
-  <div class="elder__navigation-wrapper">
-    <nav 
+  <div class="elder__navigation-wrapper" :class="{'elder__navigation-wrapper--initialized': minWidth }" ref="nav">
+    <nav
       class="elder__navigation" 
       :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }"
       :style="navStyle"
     >
       <node-component :item="logoItem" ref="item" class="elder__navigation-logo" @click="isOpen = false">
         <slot name="logo">
-          <img v-if="logo" :src="logo" :style="{ maxHeight: height + 'px' }">
+          <img v-if="logo" ref="logo" :src="logo" :style="{ maxHeight: height + 'px' }">
         </slot>
       </node-component>
 
@@ -43,8 +43,8 @@ export default {
       default: 60,
     },
     padding: {
-      type: Number,
-      default: 20,
+      type: String,
+      default: '20px',
     },
     title: String,
     action: [Object, String, Function],
@@ -54,15 +54,31 @@ export default {
     },
   },
   watch: {
+    logo: {
+      handler() {
+        this.$nextTick(() => {
+          if (!this.$refs.logo) return
+          this.$refs.logo.onload = () => {
+            this.loaded = true
+            this.calculateWidth()
+          }
+        })
+      },
+      immediate: true,
+    },
     items: {
       handler() {
-        this.calculateWidth()
+        this.$nextTick(() => {
+          console.log('items')
+          this.calculateWidth()
+        })
       },
       immediate: true,
     },
   },
   data() {
     return {
+      loaded: false,
       isOpen: false,
       minWidth: null,
       width: null,
@@ -79,7 +95,7 @@ export default {
     },
     navStyle() {
       return {
-        padding: this.padding + 'px 0',
+        padding: this.padding,
       }
     },
     hasRouterLink() {
@@ -88,14 +104,9 @@ export default {
   },
   methods: {
     calculateWidth() {
-      this.$nextTick(() => {
-        this.minWidth = Math.ceil(
-          Array.from(this.$el.querySelectorAll('.elder__navigation-node')).reduce(
-            (res, cur) => res + cur.getBoundingClientRect().width,
-            0,
-          ) + 100,
-        )
-      })
+      if (!this.loaded) return
+      let bounds = this.$refs.nav.getBoundingClientRect().width
+      this.minWidth = Math.ceil(bounds)
     },
   },
   mounted() {
@@ -119,8 +130,18 @@ export default {
 
 .elder__navigation {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
+
+  &--responsive {
+    flex-wrap: wrap;
+  }
+
+  &-wrapper {
+    &:not(&--initialized) {
+      position: fixed;
+      opacity: 0;
+    }
+  }
 
   &-logo {
     color: $primary;
@@ -142,7 +163,7 @@ export default {
     .elder__navigation--responsive & {
       display: none;
       width: calc(100% + 10px);
-      margin-top: 10px;
+      margin-top: 20px;
       animation: slideDown 150ms ease-in;
 
       @keyframes slideDown {

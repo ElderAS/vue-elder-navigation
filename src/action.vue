@@ -77,6 +77,7 @@ export default {
   border: none;
   background-color: transparent;
   text-decoration: none;
+  white-space: nowrap;
   border-radius: $border-radius;
   color: $text-color;
   transition: background-color 150ms ease-in-out;
