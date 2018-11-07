@@ -146,6 +146,7 @@ export default {
     color: $primary;
     font-size: 1.3rem;
     margin-right: auto;
+    flex-shrink: 0;
   }
 
   &-bars {
