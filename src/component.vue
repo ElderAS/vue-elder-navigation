@@ -1,11 +1,12 @@
 <template>
-  <div class="elder__navigation-wrapper" :class="{'elder__navigation-wrapper--initialized': minWidth }" ref="nav">
+  <div class="elder__navigation-wrapper" :class="{'elder__navigation-wrapper--initialized': minWidth }">
     <nav
-      class="elder__navigation" 
+      class="elder__navigation"
+      ref="nav"
       :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }"
       :style="navStyle"
     >
-      <node-component :item="logoItem" ref="item" class="elder__navigation-logo" @click="isOpen = false">
+      <node-component :item="logoItem" class="elder__navigation-logo" @click="isOpen = false">
         <slot name="logo">
           <img v-if="logo" ref="logo" :src="logo" :style="{ maxHeight: height + 'px' }">
         </slot>
@@ -15,7 +16,7 @@
         <fa :icon="isOpen ? ['fas','times'] : ['fas','bars']" size="2x"></fa>
       </div>
 
-      <div class="elder__navigation-actions" ref="item">
+      <div class="elder__navigation-actions" ref="actions">
         <node-component 
           v-for="(item, index) in items"
           :key="index"
@@ -104,8 +105,13 @@ export default {
   methods: {
     calculateWidth() {
       if (!this.loaded) return
-      let bounds = this.$refs.nav.getBoundingClientRect().width
-      this.minWidth = Math.ceil(bounds)
+      let actionBounds = this.$refs.actions.getBoundingClientRect().width
+      let logoBounds = this.$refs.logo.getBoundingClientRect().width
+      let computedStyle = window.getComputedStyle(this.$refs.nav)
+      let padding = [computedStyle.paddingRight, computedStyle.paddingLeft]
+        .map(parseFloat)
+        .reduce((r, c) => (r += c), 0)
+      this.minWidth = Math.ceil(actionBounds + logoBounds + padding)
     },
   },
   mounted() {
