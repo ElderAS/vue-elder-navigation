@@ -69,7 +69,6 @@ export default {
     items: {
       handler() {
         this.$nextTick(() => {
-          console.log('items')
           this.calculateWidth()
         })
       },
