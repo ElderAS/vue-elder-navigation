@@ -1,12 +1,20 @@
 <template>
-  <div class="elder__navigation-wrapper" :class="{'elder__navigation-wrapper--initialized': minWidth }">
+  <div
+    class="elder__navigation-wrapper"
+    :class="{'elder__navigation-wrapper--initialized': minWidth }"
+  >
     <nav
       class="elder__navigation"
       ref="nav"
       :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }"
       :style="navStyle"
     >
-      <node-component :item="logoItem" class="elder__navigation-logo" @click="isOpen = false">
+      <node-component
+        :item="logoItem"
+        ref="logoWrapper"
+        class="elder__navigation-logo"
+        @click="isOpen = false"
+      >
         <slot name="logo">
           <img v-if="logo" ref="logo" :src="logo" :style="{ maxHeight: height + 'px' }">
         </slot>
@@ -17,14 +25,14 @@
       </div>
 
       <div class="elder__navigation-actions" ref="actions">
-        <node-component 
+        <node-component
           v-for="(item, index) in items"
           :key="index"
           :item="item"
           :is-responsive="isResponsive"
           @click="isOpen = false"
         />
-        <slot />
+        <slot/>
       </div>
     </nav>
   </div>
@@ -58,11 +66,12 @@ export default {
     logo: {
       handler() {
         this.$nextTick(() => {
-          if (!this.$refs.logo) return
-          this.$refs.logo.onload = () => {
+          let init = () => {
             this.loaded = true
             this.calculateWidth()
           }
+          if (!this.$refs.logo) return init()
+          this.$refs.logo.onload = init()
         })
       },
       immediate: true,
@@ -106,7 +115,7 @@ export default {
     calculateWidth() {
       if (!this.loaded) return
       let actionBounds = this.$refs.actions.getBoundingClientRect().width
-      let logoBounds = this.$refs.logo.getBoundingClientRect().width
+      let logoBounds = this.$refs.logoWrapper.$el.getBoundingClientRect().width
       let computedStyle = window.getComputedStyle(this.$refs.nav)
       let padding = [computedStyle.paddingRight, computedStyle.paddingLeft]
         .map(parseFloat)
