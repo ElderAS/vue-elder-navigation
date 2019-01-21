@@ -72,7 +72,7 @@ export default {
     logo: {
       handler() {
         this.$nextTick(() => {
-          if (!this.$refs.logo) return init()
+          if (!this.$refs.logo) return this.init()
         })
       },
       immediate: true,
