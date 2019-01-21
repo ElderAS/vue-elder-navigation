@@ -16,7 +16,14 @@
         @click="isOpen = false"
       >
         <slot name="logo">
-          <img v-if="logo" ref="logo" :src="logo" :style="{ maxHeight: height + 'px' }">
+          <img
+            v-if="logo"
+            ref="logo"
+            :src="logo"
+            :style="{ maxHeight: height + 'px' }"
+            @load="init"
+            @error="init"
+          >
         </slot>
       </node-component>
 
@@ -40,7 +47,6 @@
 
 <script>
 import './icons'
-import Vue from 'vue'
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
 import NodeComponent from './node.vue'
 
@@ -66,12 +72,7 @@ export default {
     logo: {
       handler() {
         this.$nextTick(() => {
-          let init = () => {
-            this.loaded = true
-            this.calculateWidth()
-          }
           if (!this.$refs.logo) return init()
-          this.$refs.logo.onload = init()
         })
       },
       immediate: true,
@@ -112,6 +113,10 @@ export default {
     },
   },
   methods: {
+    init() {
+      this.loaded = true
+      this.calculateWidth()
+    },
     calculateWidth() {
       if (!this.loaded) return
       let actionBounds = this.$refs.actions.getBoundingClientRect().width
