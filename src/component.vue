@@ -1,37 +1,34 @@
 <template>
   <div
     class="elder__navigation-wrapper"
-    :class="{'elder__navigation-wrapper--initialized': minWidth }"
+    :class="{'elder__navigation-wrapper--initialized': minWidth && !isFetching }"
   >
     <nav
       class="elder__navigation"
       ref="nav"
       :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }"
-      :style="navStyle"
+      :style="{ padding: this.padding }"
     >
       <node-component
-        :item="logoItem"
-        ref="logoWrapper"
+        ref="logo"
+        :item="{ action: this.action }"
         class="elder__navigation-logo"
         @click="isOpen = false"
       >
-        <slot name="logo">
-          <img
-            v-if="logo"
-            ref="logo"
-            :src="logo"
-            :style="{ maxHeight: height + 'px' }"
-            @load="init"
-            @error="init"
-          >
-        </slot>
+        <img
+          v-if="logo"
+          :src="logo"
+          :style="{ maxHeight: height + 'px' }"
+          @load="init"
+          @error="init"
+        >
       </node-component>
 
       <div class="elder__navigation-bars" @click="isOpen = !isOpen">
         <fa :icon="isOpen ? ['fas','times'] : ['fas','bars']" size="2x"></fa>
       </div>
 
-      <div class="elder__navigation-actions" ref="actions">
+      <div class="elder__navigation-actions" ref="items">
         <node-component
           v-for="(item, index) in items"
           :key="index"
@@ -70,43 +67,24 @@ export default {
   },
   watch: {
     logo: {
-      handler() {
-        this.$nextTick(() => {
-          if (!this.$refs.logo) return this.init()
-        })
-      },
-      immediate: true,
-    },
-    items: {
-      handler() {
-        this.$nextTick(() => {
-          this.calculateWidth()
-        })
+      handler(val) {
+        if (val) this.isFetching = true
       },
       immediate: true,
     },
   },
   data() {
     return {
-      loaded: false,
       isOpen: false,
       minWidth: null,
       width: null,
+      observer: null,
+      isFetching: false,
     }
   },
   computed: {
     isResponsive() {
       return this.width < this.minWidth
-    },
-    logoItem() {
-      return {
-        action: this.action,
-      }
-    },
-    navStyle() {
-      return {
-        padding: this.padding,
-      }
     },
     hasRouterLink() {
       return '$route' in this
@@ -114,27 +92,34 @@ export default {
   },
   methods: {
     init() {
-      this.loaded = true
+      this.isFetching = false
       this.calculateWidth()
     },
     calculateWidth() {
-      if (!this.loaded) return
-      let actionBounds = this.$refs.actions.getBoundingClientRect().width
-      let logoBounds = this.$refs.logoWrapper.$el.getBoundingClientRect().width
+      if (this.isFetching) return
+      let actionWidth = this.$refs.items.getBoundingClientRect().width
+      let logoWidth = this.$refs.logo.$el.getBoundingClientRect().width
       let computedStyle = window.getComputedStyle(this.$refs.nav)
       let padding = [computedStyle.paddingRight, computedStyle.paddingLeft]
         .map(parseFloat)
         .reduce((r, c) => (r += c), 0)
-      this.minWidth = Math.ceil(actionBounds + logoBounds + padding)
+      this.minWidth = Math.ceil(actionWidth + logoWidth + padding) + 50
     },
   },
   mounted() {
-    this.$nextTick(() => {
-      this.width = window.innerWidth
-      window.addEventListener('resize', () => {
-        this.width = window.innerWidth
-      })
+    this.width = window.innerWidth
+    window.addEventListener('resize', () => (this.width = window.innerWidth))
+
+    let that = this
+    this.observer = new MutationObserver(function(list, observer) {
+      if (!list.length) return
+      that.calculateWidth()
     })
+
+    this.observer.observe(this.$el, { childList: true, subtree: true })
+  },
+  beforeDestroy() {
+    this.observer.disconnect()
   },
   components: {
     NodeComponent,
