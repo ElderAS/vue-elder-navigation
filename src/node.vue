@@ -60,19 +60,21 @@ export default {
   methods: {
     setDropdown() {
       if (!this.item.items || !this.item.items.length) return null
-      this.dropdown = Object.assign(
-        {
-          disabled: this.isResponsive,
-          html: this.$refs.dropdown.cloneNode(true),
-          theme: 'elder-navigation-light',
-          interactive: true,
-          arrow: true,
-          arrowType: 'round',
-          duration: 150,
-          distance: 15,
-        },
-        this.item.dropdownOptions,
-      )
+      this.$nextTick(() => {
+        this.dropdown = Object.assign(
+          {
+            disabled: this.isResponsive,
+            html: this.$refs.dropdown.cloneNode(true),
+            theme: 'elder-navigation-light',
+            interactive: true,
+            arrow: true,
+            arrowType: 'round',
+            duration: 150,
+            distance: 15,
+          },
+          this.item.dropdownOptions,
+        )
+      })
     },
   },
   components: {
