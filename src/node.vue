@@ -7,14 +7,18 @@
     <div v-if="type === 'dropdown'" class="elder__navigation-dropdown-wrapper">
       <div ref="dropdown" class="elder__navigation-dropdown">
         <div class="elder__navigation-dropdown-items">
-          <action-component 
+          <action-component
             v-for="(item, index) in item.items"
             :key="index"
             :item="item"
             @click="$emit('click')"
           />
         </div>
-        <div v-if="item.background" class="elder__navigation-background" :style="{ backgroundImage: 'url(' + item.background + ')'}"></div>
+        <div
+          v-if="item.background"
+          class="elder__navigation-background"
+          :style="{ backgroundImage: 'url(' + item.background + ')'}"
+        ></div>
       </div>
     </div>
   </div>
@@ -38,6 +42,12 @@ export default {
   watch: {
     isResponsive() {
       this.setDropdown()
+    },
+    item: {
+      handler() {
+        this.setDropdown()
+      },
+      immediate: true,
     },
   },
   computed: {
@@ -64,9 +74,6 @@ export default {
         this.item.dropdownOptions,
       )
     },
-  },
-  mounted() {
-    this.setDropdown()
   },
   components: {
     ActionComponent,
