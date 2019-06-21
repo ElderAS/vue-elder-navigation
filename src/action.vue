@@ -1,19 +1,27 @@
 <template>
-  <component 
-    :is="type" 
-    :to="item.action" 
+  <component
+    :is="type"
+    :to="item.action"
     :target="item.target"
     ref="anchor"
-    @click.native="onClick" 
+    @click.native="onClick"
     class="elder__navigation-component"
     :exact="item.exact"
     :active-class="activeClass"
     :class="[item.class, isActive ? activeClass : '']"
   >
     <slot>
-      <fa v-if="item.icon && alignment === 'left'" :icon="item.icon" class="elder__navigation-component-icon-left"></fa>
-      <div>{{ item.label }}</div>
-      <fa v-if="item.icon && alignment === 'right'" :icon="item.icon" class="elder__navigation-component-icon-right"></fa>
+      <fa
+        v-if="item.icon && alignment === 'left'"
+        :icon="item.icon"
+        class="elder__navigation-component-icon-left"
+      ></fa>
+      <div v-html="item.label"></div>
+      <fa
+        v-if="item.icon && alignment === 'right'"
+        :icon="item.icon"
+        class="elder__navigation-component-icon-right"
+      ></fa>
     </slot>
   </component>
 </template>

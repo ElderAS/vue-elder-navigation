@@ -64,7 +64,7 @@ export default {
         this.dropdown = Object.assign(
           {
             disabled: this.isResponsive,
-            html: this.$refs.dropdown.cloneNode(true),
+            html: this.$refs.dropdown,
             theme: 'elder-navigation-light',
             interactive: true,
             arrow: true,
