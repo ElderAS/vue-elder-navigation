@@ -21,7 +21,7 @@
           :style="{ maxHeight: height + 'px' }"
           @load="init"
           @error="init"
-        >
+        />
       </node-component>
 
       <div class="elder__navigation-bars" @click="isOpen = !isOpen">
@@ -29,6 +29,7 @@
       </div>
 
       <div class="elder__navigation-actions" ref="items">
+        <slot name="before" />
         <node-component
           v-for="(item, index) in items"
           :key="index"
@@ -36,7 +37,7 @@
           :is-responsive="isResponsive"
           @click="isOpen = false"
         />
-        <slot/>
+        <slot />
       </div>
     </nav>
   </div>
