@@ -17,7 +17,8 @@
       >
         <img
           v-if="logo"
-          :src="logo"
+          :src="logo.src || logo"
+          :alt="logo.alt || ''"
           :style="{ maxHeight: height + 'px' }"
           @load="init"
           @error="init"
@@ -50,7 +51,7 @@ import NodeComponent from './node.vue'
 
 export default {
   props: {
-    logo: String,
+    logo: [String, Object],
     height: {
       type: Number,
       default: 60,
