@@ -4,6 +4,15 @@
       <slot></slot>
     </action-component>
 
+    <div v-show="type === 'dropdown' && isResponsive" class="elder__navigation-node-children">
+      <action-component
+        v-for="(item, index) in item.items"
+        :key="'children_' + index"
+        :item="item"
+        @click="$emit('click')"
+      />
+    </div>
+
     <div v-if="type === 'dropdown'" class="elder__navigation-dropdown-wrapper">
       <div ref="dropdown" class="elder__navigation-dropdown">
         <div class="elder__navigation-dropdown-items">
@@ -115,6 +124,17 @@ export default {
 
     &-items {
       flex-grow: 1;
+    }
+  }
+
+  &-node {
+    &-children {
+      font-size: 0.75em;
+      padding-left: 2rem;
+
+      .elder__navigation-component {
+        font-weight: normal;
+      }
     }
   }
 }
