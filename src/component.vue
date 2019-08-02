@@ -98,7 +98,7 @@ export default {
       this.calculateWidth()
     },
     calculateWidth() {
-      if (this.isFetching) return
+      if (this.isFetching || this.isResponsive) return
       let actionWidth = this.$refs.items.getBoundingClientRect().width
       let logoWidth = this.$refs.logo.$el.getBoundingClientRect().width
       let computedStyle = window.getComputedStyle(this.$refs.nav)
