@@ -96,9 +96,10 @@ export default {
     init() {
       this.isFetching = false
       this.calculateWidth()
+      this.initObserver()
     },
     calculateWidth() {
-      if (this.isFetching || this.isResponsive) return
+      if (this.isFetching) return
       let actionWidth = this.$refs.items.getBoundingClientRect().width
       let logoWidth = this.$refs.logo.$el.getBoundingClientRect().width
       let computedStyle = window.getComputedStyle(this.$refs.nav)
@@ -107,21 +108,22 @@ export default {
         .reduce((r, c) => (r += c), 0)
       this.minWidth = Math.ceil(actionWidth + logoWidth + padding) + 50
     },
+    initObserver() {
+      let that = this
+      this.observer = new MutationObserver(function(list, observer) {
+        if (!list.length) return
+        that.calculateWidth()
+      })
+
+      this.observer.observe(this.$el, { childList: true, subtree: true })
+    },
   },
   mounted() {
     this.width = window.innerWidth
     window.addEventListener('resize', () => (this.width = window.innerWidth))
-
-    let that = this
-    this.observer = new MutationObserver(function(list, observer) {
-      if (!list.length) return
-      that.calculateWidth()
-    })
-
-    this.observer.observe(this.$el, { childList: true, subtree: true })
   },
   beforeDestroy() {
-    this.observer.disconnect()
+    if (this.observer) this.observer.disconnect()
   },
   components: {
     NodeComponent,
