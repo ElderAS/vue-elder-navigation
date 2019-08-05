@@ -1,12 +1,15 @@
 <template>
   <div
     class="elder__navigation-wrapper"
-    :class="{'elder__navigation-wrapper--initialized': minWidth && !isFetching }"
+    :class="{'elder__navigation-wrapper--calculated': minWidth && !isLoading }"
   >
     <nav
       class="elder__navigation"
       ref="nav"
-      :class="{ 'elder__navigation--expanded': isOpen, 'elder__navigation--responsive': isResponsive }"
+      :class="{ 
+        'elder__navigation--expanded': isOpen, 
+        'elder__navigation--responsive': isResponsive
+      }"
       :style="{ padding: this.padding }"
     >
       <node-component
@@ -35,7 +38,6 @@
           v-for="(item, index) in items"
           :key="index"
           :item="item"
-          :is-responsive="isResponsive"
           @click="isOpen = false"
         />
         <slot />
@@ -67,21 +69,13 @@ export default {
       default: () => [],
     },
   },
-  watch: {
-    logo: {
-      handler(val) {
-        if (val) this.isFetching = true
-      },
-      immediate: true,
-    },
-  },
   data() {
     return {
       isOpen: false,
       minWidth: null,
       width: null,
       observer: null,
-      isFetching: false,
+      isLoading: true,
     }
   },
   computed: {
@@ -94,33 +88,40 @@ export default {
   },
   methods: {
     init() {
-      this.isFetching = false
-      this.calculateWidth()
-      this.initObserver()
+      this.isLoading = false
+      this.calculate()
+      this.observe()
     },
-    calculateWidth() {
-      if (this.isFetching) return
-      let actionWidth = this.$refs.items.getBoundingClientRect().width
-      let logoWidth = this.$refs.logo.$el.getBoundingClientRect().width
-      let computedStyle = window.getComputedStyle(this.$refs.nav)
-      let padding = [computedStyle.paddingRight, computedStyle.paddingLeft]
-        .map(parseFloat)
-        .reduce((r, c) => (r += c), 0)
-      this.minWidth = Math.ceil(actionWidth + logoWidth + padding) + 50
+    calculate() {
+      this.minWidth = null
+      this.$nextTick(() => {
+        let actionWidth = this.$refs.items.getBoundingClientRect().width
+        let logoWidth = this.$refs.logo.$el.getBoundingClientRect().width
+        let computedStyle = window.getComputedStyle(this.$refs.nav)
+        let padding = [computedStyle.paddingRight, computedStyle.paddingLeft]
+          .map(parseFloat)
+          .reduce((r, c) => (r += c), 0)
+        this.minWidth = Math.ceil(actionWidth + logoWidth + padding) + 50
+      })
     },
-    initObserver() {
-      let that = this
-      this.observer = new MutationObserver(function(list, observer) {
+    observe() {
+      this.observer = new MutationObserver(list => {
         if (!list.length) return
-        that.calculateWidth()
+        this.calculate()
       })
 
       this.observer.observe(this.$el, { childList: true, subtree: true })
     },
+    setWidth() {
+      this.width = window.innerWidth
+    },
+  },
+  created() {
+    if (!this.logo) this.isLoading = false
   },
   mounted() {
-    this.width = window.innerWidth
-    window.addEventListener('resize', () => (this.width = window.innerWidth))
+    this.setWidth()
+    window.addEventListener('resize', () => this.setWidth())
   },
   beforeDestroy() {
     if (this.observer) this.observer.disconnect()
@@ -145,9 +146,12 @@ export default {
   }
 
   &-wrapper {
-    &:not(&--initialized) {
+    transition: transform 100ms ease-out;
+
+    &:not(&--calculated) {
       position: fixed;
-      opacity: 0;
+      transform: translateY(-100%);
+      flex-wrap: nowrap;
     }
   }
 

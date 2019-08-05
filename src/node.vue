@@ -40,7 +40,6 @@ export default {
   name: 'elder-node-component',
   props: {
     item: Object,
-    isResponsive: Boolean,
   },
   data() {
     return {
@@ -64,6 +63,9 @@ export default {
       if (this.item.items && this.item.items.length) return 'dropdown'
       if (!this.item.action) return null
       return typeof this.item.action
+    },
+    isResponsive() {
+      return this.$parent.isResponsive
     },
   },
   methods: {
