@@ -29,7 +29,7 @@
       </node-component>
 
       <div class="elder__navigation-bars" @click="isOpen = !isOpen">
-        <fa :icon="isOpen ? ['fas','times'] : ['fas','bars']" size="2x"></fa>
+        <fa :icon="isOpen ? ['fas','times'] : ['fas','bars']" size="lg"></fa>
       </div>
 
       <div class="elder__navigation-actions" ref="items">

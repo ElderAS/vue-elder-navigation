@@ -1,12 +1,7 @@
 <template>
   <div id="app">
-    <NavigationComponent :logo="{ alt: 'Test', src: '/logo.png' }" :items="items">
-      <NodeComponent :item="{ label: 'Slot', action: '#'}" />
-      <template #before>
-        <NodeComponent :item="beforeSlot" />
-      </template>
-    </NavigationComponent>
-    <router-view />
+    <NavigationComponent :logo="{ alt: 'Test', src: '/logo.png' }" :items="items"></NavigationComponent>
+    <!-- <router-view /> -->
   </div>
 </template>
 
@@ -15,22 +10,17 @@ import { NavigationComponent, NodeComponent } from '../../'
 export default {
   data() {
     return {
-      items: new Array(10).fill(undefined).map((v, i) => ({
+      items: new Array(5).fill(undefined).map((v, i) => ({
         label: 'Link ' + i,
         action: '#',
-        // items: new Array(3).fill(undefined).map((v, i) => ({
-        //   label: 'Link ' + i,
-        //   action: '#',
-        // })),
+        items:
+          i === 3
+            ? new Array(3).fill(undefined).map((v, i) => ({
+                label: 'Link ' + i,
+                action: '#',
+              }))
+            : [],
       })),
-      beforeSlot: {
-        label: 'Before slot',
-        action: '#',
-        items: new Array(3).fill(undefined).map((v, i) => ({
-          label: 'Link ' + i,
-          action: '#',
-        })),
-      },
     }
   },
   components: {

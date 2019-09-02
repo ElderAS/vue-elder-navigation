@@ -1,10 +1,21 @@
 <template>
   <div class="elder__navigation-node">
-    <action-component :item="item" v-tippy="dropdown" @click="$emit('click')">
-      <slot></slot>
-    </action-component>
+    <div class="elder__navigation-node-wrapper">
+      <action-component :item="item" v-tippy="dropdown" @click="$emit('click')">
+        <slot></slot>
+      </action-component>
+      <fa
+        v-if="type === 'dropdown' && isResponsive"
+        class="elder__navigation-node-subitems-trigger"
+        @click.stop="showSubitems = !showSubitems"
+        :icon="showSubitems ? ['fas','angle-up'] : ['fas','angle-down']"
+      ></fa>
+    </div>
 
-    <div v-show="type === 'dropdown' && isResponsive" class="elder__navigation-node-children">
+    <div
+      v-show="type === 'dropdown' && isResponsive && showSubitems"
+      class="elder__navigation-node-children"
+    >
       <action-component
         v-for="(item, index) in item.items"
         :key="'children_' + index"
@@ -13,7 +24,7 @@
       />
     </div>
 
-    <div v-if="type === 'dropdown' && !isResponsive" class="elder__navigation-dropdown-wrapper">
+    <div v-if="type === 'dropdown'" class="elder__navigation-dropdown-wrapper">
       <div ref="dropdown" class="elder__navigation-dropdown">
         <div class="elder__navigation-dropdown-items">
           <action-component
@@ -35,6 +46,7 @@
 
 <script>
 import ActionComponent from './action'
+import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
 import Tippy from './tippy'
 export default {
   name: 'elder-node-component',
@@ -45,6 +57,7 @@ export default {
     return {
       id: 'test',
       dropdown: null,
+      showSubitems: false,
     }
   },
   watch: {
@@ -90,6 +103,7 @@ export default {
   },
   components: {
     ActionComponent,
+    Fa,
   },
   directives: {
     Tippy: Tippy(),
@@ -130,6 +144,16 @@ export default {
   }
 
   &-node {
+    &-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &-subitems-trigger {
+      padding: 5px;
+    }
+
     &-children {
       font-size: 0.75em;
       padding-left: 2rem;
