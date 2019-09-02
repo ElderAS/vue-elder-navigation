@@ -5,23 +5,20 @@
         <slot></slot>
       </action-component>
       <fa
-        v-if="type === 'dropdown' && isResponsive"
+        v-show="type === 'dropdown' && isResponsive"
         class="elder__navigation-node-subitems-trigger"
         @click.stop="showSubitems = !showSubitems"
         :icon="showSubitems ? ['fas','angle-up'] : ['fas','angle-down']"
       ></fa>
     </div>
 
-    <div
-      v-show="type === 'dropdown' && isResponsive && showSubitems"
-      class="elder__navigation-node-children"
-    >
-      <action-component
-        v-for="(item, index) in item.items"
-        :key="'children_' + index"
-        :item="item"
-        @click="$emit('click')"
-      />
+    <div v-show="type === 'dropdown' && isResponsive && showSubitems" class="elder__navigation-node-children">
+        <action-component
+          v-for="(item, index) in item.items"
+          :key="'children_' + index"
+          :item="item"
+          @click="$emit('click')"
+        />
     </div>
 
     <div v-if="type === 'dropdown'" class="elder__navigation-dropdown-wrapper">
