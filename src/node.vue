@@ -12,16 +12,19 @@
       ></fa>
     </div>
 
-    <div v-show="type === 'dropdown' && isResponsive && showSubitems" class="elder__navigation-node-children">
-        <action-component
-          v-for="(item, index) in item.items"
-          :key="'children_' + index"
-          :item="item"
-          @click="$emit('click')"
-        />
+    <div
+      v-show="type === 'dropdown' && isResponsive && showSubitems"
+      class="elder__navigation-node-children"
+    >
+      <action-component
+        v-for="(item, index) in item.items"
+        :key="'children_' + index"
+        :item="item"
+        @click="$emit('click')"
+      />
     </div>
 
-    <div v-if="type === 'dropdown'" class="elder__navigation-dropdown-wrapper">
+    <div v-show="type === 'dropdown'" class="elder__navigation-dropdown-wrapper">
       <div ref="dropdown" class="elder__navigation-dropdown">
         <div class="elder__navigation-dropdown-items">
           <action-component
@@ -32,7 +35,7 @@
           />
         </div>
         <div
-          v-if="item.background"
+          v-show="item.background"
           class="elder__navigation-background"
           :style="{ backgroundImage: 'url(' + item.background + ')'}"
         ></div>
