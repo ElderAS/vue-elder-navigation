@@ -13,7 +13,7 @@
       />
     </div>
 
-    <div v-if="type === 'dropdown'" class="elder__navigation-dropdown-wrapper">
+    <div v-if="type === 'dropdown' && !isResponsive" class="elder__navigation-dropdown-wrapper">
       <div ref="dropdown" class="elder__navigation-dropdown">
         <div class="elder__navigation-dropdown-items">
           <action-component
