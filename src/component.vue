@@ -50,6 +50,7 @@
 import './icons'
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
 import NodeComponent from './node.vue'
+import { throttle } from './utils'
 
 export default {
   props: {
@@ -107,6 +108,7 @@ export default {
     observe() {
       this.observer = new MutationObserver(list => {
         if (!list.length) return
+        console.log('Observer kicking')
         this.calculate()
       })
 
@@ -121,7 +123,12 @@ export default {
   },
   mounted() {
     this.setWidth()
-    window.addEventListener('resize', () => this.setWidth())
+    window.addEventListener(
+      'resize',
+      throttle(() => {
+        this.setWidth()
+      }, 500),
+    )
   },
   beforeDestroy() {
     if (this.observer) this.observer.disconnect()

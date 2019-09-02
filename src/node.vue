@@ -1,5 +1,5 @@
 <template>
-  <div class="elder__navigation-node">
+  <div v-show="item.show !== false" class="elder__navigation-node">
     <div class="elder__navigation-node-wrapper">
       <action-component :item="item" v-tippy="dropdown" @click="$emit('click')">
         <slot></slot>
@@ -151,12 +151,12 @@ export default {
     }
 
     &-subitems-trigger {
-      padding: 5px;
+      padding: 5px 5px 5px 10px;
     }
 
     &-children {
-      font-size: 0.75em;
-      padding-left: 2rem;
+      font-size: 0.8em;
+      padding-left: 1rem;
 
       .elder__navigation-component {
         font-weight: normal;
