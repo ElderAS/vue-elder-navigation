@@ -1,7 +1,7 @@
 <template>
   <div
     class="elder__navigation-wrapper"
-    :class="{'elder__navigation-wrapper--calculated': minWidth && !isLoading }"
+    :class="{'elder__navigation-wrapper--calculated': breakpoint && !isLoading }"
   >
     <nav
       class="elder__navigation"
@@ -22,7 +22,7 @@
           v-if="logo"
           :src="logo.src || logo"
           :alt="logo.alt || ''"
-          :style="{ maxHeight: height + 'px' }"
+          :style="{ maxHeight: logo.height || height + 'px' }"
           @load="init"
           @error="init"
         />
@@ -64,6 +64,7 @@ export default {
       default: '20px',
     },
     title: String,
+    breakAt: Number,
     action: [Object, String, Function],
     items: {
       type: Array,
@@ -81,7 +82,10 @@ export default {
   },
   computed: {
     isResponsive() {
-      return this.width < this.minWidth
+      return this.width < this.breakpoint
+    },
+    breakpoint() {
+      return this.breakAt || this.minWidth
     },
     hasRouterLink() {
       return '$route' in this
@@ -94,6 +98,8 @@ export default {
       this.observe()
     },
     calculate() {
+      if (this.breakAt) return
+
       this.minWidth = null
       this.$nextTick(() => {
         let actionWidth = this.$refs.items.getBoundingClientRect().width
@@ -106,13 +112,14 @@ export default {
       })
     },
     observe() {
+      if (this.breakAt) return
+
       this.observer = new MutationObserver(list => {
         if (!list.length) return
-        console.log('Observer kicking')
         this.calculate()
       })
 
-      this.observer.observe(this.$el, { childList: true, subtree: true })
+      this.observer.observe(this.$refs.items, { childList: true, subtree: true })
     },
     setWidth() {
       this.width = window.innerWidth

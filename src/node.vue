@@ -4,12 +4,13 @@
       <action-component :item="item" v-tippy="dropdown" @click="$emit('click')">
         <slot></slot>
       </action-component>
-      <fa
-        v-show="type === 'dropdown' && isResponsive"
+      <div
         class="elder__navigation-node-subitems-trigger"
+        v-show="type === 'dropdown' && isResponsive"
         @click.stop="showSubitems = !showSubitems"
-        :icon="showSubitems ? ['fas','angle-up'] : ['fas','angle-down']"
-      ></fa>
+      >
+        <fa :icon="showSubitems ? ['fas','angle-up'] : ['fas','angle-down']"></fa>
+      </div>
     </div>
 
     <div
