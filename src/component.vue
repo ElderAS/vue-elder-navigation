@@ -119,7 +119,7 @@ export default {
         this.calculate()
       })
 
-      this.observer.observe(this.$refs.items, { childList: true, subtree: true })
+      this.observer.observe(this.$refs.items, { childList: true })
     },
     setWidth() {
       this.width = window.innerWidth
