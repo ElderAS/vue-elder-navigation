@@ -22,7 +22,7 @@
           v-if="logo"
           :src="logo.src || logo"
           :alt="logo.alt || ''"
-          :style="{ maxHeight: logo.height || height + 'px' }"
+          :style="{ maxHeight: (logo.height || height) + 'px' }"
           @load="init"
           @error="init"
         />
