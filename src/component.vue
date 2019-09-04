@@ -1,7 +1,7 @@
 <template>
   <div
     class="elder__navigation-wrapper"
-    :class="{'elder__navigation-wrapper--calculated': breakpoint && !isLoading }"
+    :class="{'elder__navigation-wrapper--calculated': breakpoint }"
     :style="{ transition: animate ? 'transform 100ms ease-out' : 'none'}"
   >
     <nav
@@ -83,7 +83,6 @@ export default {
       minWidth: null,
       width: null,
       observer: null,
-      isLoading: true,
     }
   },
   computed: {
@@ -99,7 +98,6 @@ export default {
   },
   methods: {
     init() {
-      this.isLoading = false
       this.calculate()
       this.observe()
     },
@@ -130,9 +128,6 @@ export default {
     setWidth() {
       this.width = window.innerWidth
     },
-  },
-  created() {
-    if (!this.logo) this.isLoading = false
   },
   mounted() {
     if (this.$refs.img && this.$refs.img.complete) this.init()
