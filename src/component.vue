@@ -2,6 +2,7 @@
   <div
     class="elder__navigation-wrapper"
     :class="{'elder__navigation-wrapper--calculated': breakpoint && !isLoading }"
+    :style="{ transition: animate ? 'transform 100ms ease-out' : 'none'}"
   >
     <nav
       class="elder__navigation"
@@ -20,6 +21,7 @@
       >
         <img
           v-if="logo"
+          ref="img"
           :src="logo.src || logo"
           :alt="logo.alt || ''"
           :style="{ maxHeight: (logo.height || height) + 'px' }"
@@ -55,6 +57,10 @@ import { throttle } from './utils'
 export default {
   props: {
     logo: [String, Object],
+    animate: {
+      type: Boolean,
+      default: true,
+    },
     height: {
       type: Number,
       default: 60,
@@ -129,6 +135,7 @@ export default {
     if (!this.logo) this.isLoading = false
   },
   mounted() {
+    if (this.$refs.img && this.$refs.img.complete) this.init()
     this.setWidth()
     window.addEventListener(
       'resize',
@@ -160,8 +167,6 @@ export default {
   }
 
   &-wrapper {
-    transition: transform 100ms ease-out;
-
     &:not(&--calculated) {
       position: fixed;
       transform: translateY(-100%);

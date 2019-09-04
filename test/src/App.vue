@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <NavigationComponent :logo="{ alt: 'Test', src: '/logo.png' }" :items="items"></NavigationComponent>
+    <NavigationComponent :logo="{ alt: 'Test', src: '/logo.png', height: 22 }" :items="items"></NavigationComponent>
     <!-- <router-view /> -->
   </div>
 </template>
