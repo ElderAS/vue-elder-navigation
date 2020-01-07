@@ -9,14 +9,11 @@
         v-show="type === 'dropdown' && isResponsive"
         @click.stop="showSubitems = !showSubitems"
       >
-        <fa :icon="showSubitems ? ['fas','angle-up'] : ['fas','angle-down']"></fa>
+        <fa :icon="showSubitems ? ['fas', 'angle-up'] : ['fas', 'angle-down']"></fa>
       </div>
     </div>
 
-    <div
-      v-show="type === 'dropdown' && isResponsive && showSubitems"
-      class="elder__navigation-node-children"
-    >
+    <div v-show="type === 'dropdown' && isResponsive && showSubitems" class="elder__navigation-node-children">
       <action-component
         v-for="(item, index) in item.items"
         :key="'children_' + index"
@@ -28,17 +25,12 @@
     <div v-show="type === 'dropdown' && !isResponsive" class="elder__navigation-dropdown-wrapper">
       <div ref="dropdown" class="elder__navigation-dropdown">
         <div class="elder__navigation-dropdown-items">
-          <action-component
-            v-for="(item, index) in item.items"
-            :key="index"
-            :item="item"
-            @click="$emit('click')"
-          />
+          <action-component v-for="(item, index) in item.items" :key="index" :item="item" @click="$emit('click')" />
         </div>
         <div
           v-show="item.background"
           class="elder__navigation-background"
-          :style="{ backgroundImage: 'url(' + item.background + ')'}"
+          :style="{ backgroundImage: 'url(' + item.background + ')' }"
         ></div>
       </div>
     </div>
@@ -113,7 +105,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~node_modules/vue-elder-defaults/styles/variables';
+@import './variables';
 
 .elder__navigation {
   &-background {
@@ -185,4 +177,3 @@ export default {
   }
 }
 </style>
-

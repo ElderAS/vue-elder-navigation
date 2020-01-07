@@ -1,24 +1,19 @@
 <template>
   <div
     class="elder__navigation-wrapper"
-    :class="{'elder__navigation-wrapper--calculated': breakpoint }"
-    :style="{ transition: animate ? 'transform 100ms ease-out' : 'none'}"
+    :class="{ 'elder__navigation-wrapper--calculated': breakpoint }"
+    :style="{ transition: animate ? 'transform 100ms ease-out' : 'none' }"
   >
     <nav
       class="elder__navigation"
       ref="nav"
-      :class="{ 
-        'elder__navigation--expanded': isOpen, 
-        'elder__navigation--responsive': isResponsive
+      :class="{
+        'elder__navigation--expanded': isOpen,
+        'elder__navigation--responsive': isResponsive,
       }"
       :style="{ padding: this.padding }"
     >
-      <node-component
-        ref="logo"
-        :item="{ action: this.action }"
-        class="elder__navigation-logo"
-        @click="isOpen = false"
-      >
+      <node-component ref="logo" :item="{ action: this.action }" class="elder__navigation-logo" @click="isOpen = false">
         <img
           v-if="logo"
           ref="img"
@@ -31,17 +26,12 @@
       </node-component>
 
       <div class="elder__navigation-bars" @click="isOpen = !isOpen">
-        <fa :icon="isOpen ? ['fas','times'] : ['fas','bars']" size="lg"></fa>
+        <fa :icon="isOpen ? ['fas', 'times'] : ['fas', 'bars']" size="lg"></fa>
       </div>
 
       <div class="elder__navigation-actions" ref="items">
         <slot name="before" />
-        <node-component
-          v-for="(item, index) in items"
-          :key="index"
-          :item="item"
-          @click="isOpen = false"
-        />
+        <node-component v-for="(item, index) in items" :key="index" :item="item" @click="isOpen = false" />
         <slot />
       </div>
     </nav>
@@ -120,6 +110,7 @@ export default {
 
       this.observer = new MutationObserver(list => {
         if (!list.length) return
+        console.log('mutation')
         this.calculate()
       })
 
@@ -150,8 +141,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~node_modules/vue-elder-defaults/styles/variables';
-@import '~node_modules/vue-elder-defaults/styles/utils';
+@import './variables';
 
 .elder__navigation {
   display: flex;

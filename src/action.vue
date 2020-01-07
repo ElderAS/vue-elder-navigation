@@ -11,11 +11,7 @@
     :class="[item.class, isActive ? activeClass : '']"
   >
     <slot>
-      <fa
-        v-if="item.icon && alignment === 'left'"
-        :icon="item.icon"
-        class="elder__navigation-component-icon-left"
-      ></fa>
+      <fa v-if="item.icon && alignment === 'left'" :icon="item.icon" class="elder__navigation-component-icon-left"></fa>
       <div v-html="item.label"></div>
       <fa
         v-if="item.icon && alignment === 'right'"
@@ -72,8 +68,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~node_modules/vue-elder-defaults/styles/variables';
-@import '~node_modules/vue-elder-defaults/styles/utils';
+@import './variables';
 
 .elder__navigation-component {
   display: flex;
@@ -92,7 +87,7 @@ export default {
 
   &:hover,
   &:active {
-    background-color: rgba($primary, 0.2);
+    background-color: $elder-navigation-active-color;
   }
 
   &-icon-left {
@@ -104,7 +99,7 @@ export default {
   }
 
   &--active {
-    background-color: rgba($primary, 0.2);
+    background-color: $elder-navigation-active-color;
   }
 
   .elder__navigation--responsive & {
@@ -118,5 +113,3 @@ export default {
   }
 }
 </style>
-
-
