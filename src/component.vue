@@ -26,7 +26,7 @@
       </node-component>
 
       <div class="elder__navigation-bars" @click="isOpen = !isOpen">
-        <fa :icon="isOpen ? ['fas', 'times'] : ['fas', 'bars']" size="lg"></fa>
+        <fa v-bind="isOpen ? iconList.menuClose : iconList.menu"></fa>
       </div>
 
       <div class="elder__navigation-actions" ref="items">
@@ -41,8 +41,9 @@
 <script>
 import './icons'
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
+import { Options } from '../index'
 import NodeComponent from './node.vue'
-import { throttle } from './utils'
+import { throttle, iconBinding } from './utils'
 
 export default {
   props: {
@@ -66,6 +67,15 @@ export default {
       type: Array,
       default: () => [],
     },
+    icons: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  provide() {
+    return {
+      iconList: this.iconList,
+    }
   },
   data() {
     return {
@@ -84,6 +94,12 @@ export default {
     },
     hasRouterLink() {
       return '$route' in this
+    },
+    iconList() {
+      return Object.entries(Options.icons).reduce((res, [key, value]) => {
+        res[key] = iconBinding(this.icons[key] || value)
+        return res
+      }, {})
     },
   },
   methods: {
@@ -177,11 +193,19 @@ export default {
   &-actions {
     display: flex;
 
+    & > * + * {
+      margin-left: 0.5rem;
+    }
+
     .elder__navigation--responsive & {
       display: none;
       width: calc(100% + 10px);
       margin-top: 20px;
       animation: slideDown 150ms ease-in;
+
+      & > * {
+        margin-left: 0;
+      }
 
       @keyframes slideDown {
         0% {

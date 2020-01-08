@@ -9,7 +9,7 @@
         v-show="type === 'dropdown' && isResponsive"
         @click.stop="showSubitems = !showSubitems"
       >
-        <fa :icon="showSubitems ? ['fas', 'angle-up'] : ['fas', 'angle-down']"></fa>
+        <fa v-bind="showSubitems ? iconList.collapse : iconList.expand"></fa>
       </div>
     </div>
 
@@ -43,6 +43,7 @@ import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
 import Tippy from './tippy'
 export default {
   name: 'elder-node-component',
+  inject: ['iconList'],
   props: {
     item: Object,
   },

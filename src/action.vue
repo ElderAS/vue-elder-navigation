@@ -11,13 +11,9 @@
     :class="[item.class, isActive ? activeClass : '']"
   >
     <slot>
-      <fa v-if="item.icon && alignment === 'left'" :icon="item.icon" class="elder__navigation-component-icon-left"></fa>
+      <fa v-if="icon && alignment === 'left'" v-bind="icon" class="elder__navigation-component-icon-left"></fa>
       <div v-html="item.label"></div>
-      <fa
-        v-if="item.icon && alignment === 'right'"
-        :icon="item.icon"
-        class="elder__navigation-component-icon-right"
-      ></fa>
+      <fa v-if="icon && alignment === 'right'" v-bind="icon" class="elder__navigation-component-icon-right"></fa>
     </slot>
   </component>
 </template>
@@ -26,6 +22,7 @@
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
 import AnchorComponent from './action-types/anchor'
 import ButtonComponent from './action-types/button'
+import { iconBinding } from './utils'
 
 export default {
   props: {
@@ -52,6 +49,9 @@ export default {
       if ('active' in this.item) return this.item.active
       if (this.type !== 'a') return false
       return location.href.replace(location.origin, '').includes(this.item.action)
+    },
+    icon() {
+      return iconBinding(this.item.icon)
     },
   },
   methods: {
