@@ -28,7 +28,6 @@ export default {
   props: {
     label: String,
     action: [String, Object, Function],
-    class: String,
     alignment: {
       type: String,
       default: 'right',
@@ -53,7 +52,7 @@ export default {
     classes() {
       return [
         'elder__navigation-component',
-        this.class,
+        this.$attrs.class,
         {
           [this.activeClass]: this.isActive,
         },
