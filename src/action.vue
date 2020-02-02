@@ -1,19 +1,19 @@
 <template>
   <component
     :is="type"
-    :to="item.action"
-    :target="item.target"
+    v-bind="{
+      to: action,
+      activeClass,
+      ...$attrs,
+    }"
+    :class="classes"
     ref="anchor"
     @click.native="onClick"
-    class="elder__navigation-component"
-    :exact="item.exact"
-    :active-class="activeClass"
-    :class="[item.class, isActive ? activeClass : '']"
   >
     <slot>
-      <fa v-if="icon && alignment === 'left'" v-bind="icon" class="elder__navigation-component-icon-left"></fa>
-      <div v-html="item.label"></div>
-      <fa v-if="icon && alignment === 'right'" v-bind="icon" class="elder__navigation-component-icon-right"></fa>
+      <fa v-if="icon && alignment === 'left'" v-bind="iconComp" class="elder__navigation-component-icon-left"></fa>
+      <div v-html="label"></div>
+      <fa v-if="icon && alignment === 'right'" v-bind="iconComp" class="elder__navigation-component-icon-right"></fa>
     </slot>
   </component>
 </template>
@@ -26,32 +26,46 @@ import { iconBinding } from './utils'
 
 export default {
   props: {
-    item: Object,
+    label: String,
+    action: [String, Object, Function],
+    class: String,
+    alignment: {
+      type: String,
+      default: 'right',
+    },
+    icon: [String, Array, Object],
+    activeClass: {
+      type: String,
+      default: 'elder__navigation-component--active',
+    },
   },
   computed: {
     type() {
-      switch (typeof this.item.action) {
+      switch (typeof this.action) {
         case 'string':
-          return 'anchor-component'
+          return AnchorComponent
         case 'object':
           return 'router-link'
         default:
-          return 'button-component'
+          return ButtonComponent
       }
     },
-    activeClass() {
-      return this.item.activeClass || 'elder__navigation-component--active'
-    },
-    alignment() {
-      return this.item.alignment || 'right'
+    classes() {
+      return [
+        'elder__navigation-component',
+        this.class,
+        {
+          [this.activeClass]: this.isActive,
+        },
+      ]
     },
     isActive() {
-      if ('active' in this.item) return this.item.active
-      if (this.type !== 'a') return false
-      return location.href.replace(location.origin, '').includes(this.item.action)
+      if (typeof this.action === 'object') return false
+      if (this.active) return true
+      if (typeof this.action === 'string') return location.href.replace(location.origin, '').includes(this.action)
     },
-    icon() {
-      return iconBinding(this.item.icon)
+    iconComp() {
+      return iconBinding(this.icon)
     },
   },
   methods: {
@@ -61,8 +75,6 @@ export default {
   },
   components: {
     Fa,
-    AnchorComponent,
-    ButtonComponent,
   },
 }
 </script>

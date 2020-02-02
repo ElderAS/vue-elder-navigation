@@ -1,7 +1,7 @@
 <template>
   <div v-show="item.show !== false" class="elder__navigation-node">
     <div class="elder__navigation-node-wrapper">
-      <action-component :item="item" v-tippy="dropdown" @click="$emit('click')">
+      <action-component v-bind="item" v-tippy="dropdown" @click="$emit('click')">
         <slot></slot>
       </action-component>
       <div
@@ -17,7 +17,7 @@
       <action-component
         v-for="(item, index) in item.items"
         :key="'children_' + index"
-        :item="item"
+        v-bind="item"
         @click="$emit('click')"
       />
     </div>
@@ -25,7 +25,7 @@
     <div v-show="type === 'dropdown' && !isResponsive" class="elder__navigation-dropdown-wrapper">
       <div ref="dropdown" class="elder__navigation-dropdown">
         <div class="elder__navigation-dropdown-items">
-          <action-component v-for="(item, index) in item.items" :key="index" :item="item" @click="$emit('click')" />
+          <action-component v-for="(item, index) in item.items" :key="index" v-bind="item" @click="$emit('click')" />
         </div>
         <div
           v-show="item.background"

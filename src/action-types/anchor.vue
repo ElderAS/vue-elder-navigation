@@ -1,13 +1,5 @@
 <template>
-  <a :href="to">
+  <a :href="$attrs.to">
     <slot></slot>
   </a>
 </template>
-
-<script>
-export default {
-  props: {
-    to: String,
-  },
-}
-</script>
