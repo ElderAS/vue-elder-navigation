@@ -1,19 +1,32 @@
 <template>
   <div v-show="item.show !== false" class="elder__navigation-node">
-    <div class="elder__navigation-node-wrapper">
-      <action-component v-bind="item" v-tippy="dropdown" @click="$emit('click')">
+    <div class="elder__navigation-node-wrapper" @mouseover="onMouseover" @mouseleave="onMouseleave">
+      <action-component ref="target" v-bind="item" @click="$emit('click')">
         <slot></slot>
       </action-component>
       <div
         class="elder__navigation-node-subitems-trigger"
-        v-show="type === 'dropdown' && isResponsive"
+        v-show="hasSubitems && isResponsive"
         @click.stop="showSubitems = !showSubitems"
       >
         <fa v-bind="showSubitems ? iconList.collapse : iconList.expand"></fa>
       </div>
+
+      <div v-show="instance && hasSubitems && showSubitems" ref="dropdown" class="elder__navigation-dropdown-wrapper">
+        <div class="elder__navigation-dropdown">
+          <div class="elder__navigation-dropdown-items">
+            <action-component v-for="(item, index) in item.items" :key="index" v-bind="item" @click="$emit('click')" />
+          </div>
+          <div
+            v-show="item.background"
+            class="elder__navigation-background"
+            :style="{ backgroundImage: 'url(' + item.background + ')' }"
+          ></div>
+        </div>
+      </div>
     </div>
 
-    <div v-show="type === 'dropdown' && isResponsive && showSubitems" class="elder__navigation-node-children">
+    <div v-show="hasSubitems && isResponsive && showSubitems" class="elder__navigation-node-children">
       <action-component
         v-for="(item, index) in item.items"
         :key="'children_' + index"
@@ -21,26 +34,14 @@
         @click="$emit('click')"
       />
     </div>
-
-    <div v-show="type === 'dropdown' && !isResponsive" class="elder__navigation-dropdown-wrapper">
-      <div ref="dropdown" class="elder__navigation-dropdown">
-        <div class="elder__navigation-dropdown-items">
-          <action-component v-for="(item, index) in item.items" :key="index" v-bind="item" @click="$emit('click')" />
-        </div>
-        <div
-          v-show="item.background"
-          class="elder__navigation-background"
-          :style="{ backgroundImage: 'url(' + item.background + ')' }"
-        ></div>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
 import ActionComponent from './action'
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
-import Tippy from './tippy'
+import { createPopper } from '@popperjs/core'
+
 export default {
   name: 'elder-node-component',
   inject: ['iconList'],
@@ -49,58 +50,64 @@ export default {
   },
   data() {
     return {
-      id: 'test',
-      dropdown: null,
+      instance: null,
       showSubitems: false,
     }
   },
   watch: {
-    isResponsive() {
-      this.setDropdown()
+    isResponsive(val) {
+      return val ? this.destroyDropdown() : this.initDropdown()
     },
-    item: {
-      handler() {
-        this.setDropdown()
-      },
-      immediate: true,
+    showSubitems(val) {
+      if (val && this.instance) this.instance.update()
     },
   },
   computed: {
     type() {
-      if (this.item.items && this.item.items.length) return 'dropdown'
+      if (this.hasSubitems) return 'dropdown'
       if (!this.item.action) return null
       return typeof this.item.action
     },
     isResponsive() {
       return this.$parent.isResponsive
     },
+    hasSubitems() {
+      return this.item.items && this.item.items.length
+    },
   },
   methods: {
-    setDropdown() {
-      if (!this.item.items || !this.item.items.length) return null
+    onMouseover() {
+      if (this.isResponsive) return
+      this.showSubitems = true
+    },
+    onMouseleave() {
+      if (this.isResponsive) return
+      this.showSubitems = false
+    },
+    initDropdown() {
+      if (this.instance || !this.$refs.dropdown || !this.$refs.target) return
+
       this.$nextTick(() => {
-        this.dropdown = Object.assign(
-          {
-            disabled: this.isResponsive,
-            html: this.$refs.dropdown,
-            theme: 'elder-navigation-light',
-            interactive: true,
-            arrow: true,
-            arrowType: 'round',
-            duration: 150,
-            distance: 15,
-          },
-          this.item.dropdownOptions,
-        )
+        this.instance = createPopper(this.$refs.target.$el, this.$refs.dropdown, {
+          placement: 'bottom-end',
+        })
       })
     },
+    destroyDropdown() {
+      if (!this.instance) return
+      this.instance.destroy()
+      this.instance = null
+    },
+  },
+  mounted() {
+    this.initDropdown()
+  },
+  beforeDestroy: function() {
+    this.destroyDropdown()
   },
   components: {
     ActionComponent,
     Fa,
-  },
-  directives: {
-    Tippy: Tippy(),
   },
 }
 </script>
@@ -121,31 +128,35 @@ export default {
       display: none;
     }
   }
-  &-dropdown-wrapper {
-    display: none;
 
-    .elder__navigation--responsive & {
-      display: block;
-    }
-  }
   &-dropdown {
+    background-color: white;
+    box-shadow: 0 5px 25px -5px rgba(black, 0.15);
+    min-width: 200px;
     display: flex;
-    min-width: 150px;
+
+    &-wrapper {
+      padding-top: 8px;
+      z-index: 1;
+    }
 
     &-items {
+      display: flex;
+      flex-direction: column;
       flex-grow: 1;
     }
   }
 
   &-node {
-    &-wrapper {
+    &-subitems-trigger {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      padding: 10px;
     }
 
-    &-subitems-trigger {
-      padding: 5px 5px 5px 10px;
+    &-wrapper {
+      display: flex;
     }
 
     &-children {
@@ -155,25 +166,6 @@ export default {
       .elder__navigation-component {
         font-weight: normal;
       }
-    }
-  }
-}
-
-.tippy-tooltip {
-  &.elder-navigation-light-theme {
-    background-color: white;
-    padding: 10px;
-    box-shadow: 0 -5px 25px -5px rgba(0, 0, 0, 0.2);
-    font: inherit;
-
-    .tippy-backdrop {
-      background-color: white;
-    }
-    .tippy-content {
-      font: inherit;
-    }
-    .tippy-roundarrow {
-      fill: white;
     }
   }
 }
