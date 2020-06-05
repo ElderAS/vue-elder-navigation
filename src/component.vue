@@ -15,14 +15,15 @@
     >
       <node-component ref="logo" :item="{ action: this.action }" class="elder__navigation-logo" @click="isOpen = false">
         <img
-          v-if="logo"
+          v-if="logo && logoState !== 'error'"
           ref="img"
           :src="logo.src || logo"
-          :alt="logo.alt || ''"
+          :alt="logo.alt || title"
           :style="{ maxHeight: (logo.height || height) + 'px' }"
-          @load="init"
-          @error="init"
+          @load="onLogoLoad"
+          @error="onLogoError"
         />
+        <div v-if="title && (!logo || logoState === 'error')" class="elder__navigation-logo-fallback">{{ title }}</div>
       </node-component>
 
       <div class="elder__navigation-bars" @click="isOpen = !isOpen">
@@ -83,6 +84,7 @@ export default {
       minWidth: null,
       width: null,
       observer: null,
+      logoState: null,
     }
   },
   computed: {
@@ -107,6 +109,14 @@ export default {
       this.calculate()
       this.observe()
     },
+    onLogoError() {
+      this.logoState = 'error'
+      this.init()
+    },
+    onLogoLoad() {
+      this.logoState = 'loaded'
+      this.init()
+    },
     calculate() {
       if (this.breakAt) return
 
@@ -124,7 +134,7 @@ export default {
     observe() {
       if (this.breakAt) return
 
-      this.observer = new MutationObserver(list => {
+      this.observer = new MutationObserver((list) => {
         if (!list.length) return
         console.log('mutation')
         this.calculate()
@@ -180,6 +190,10 @@ export default {
     font-size: 1.3rem;
     margin-right: auto;
     flex-shrink: 0;
+
+    &-fallback {
+      line-height: 1;
+    }
   }
 
   &-bars {
