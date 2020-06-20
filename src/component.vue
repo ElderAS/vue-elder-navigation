@@ -190,7 +190,7 @@ export default {
   }
 
   &-logo {
-    color: var(--vue-elder-primary);
+    color: GetVariable('primary');
     font-size: 1.3rem;
     margin-right: auto;
     flex-shrink: 0;
