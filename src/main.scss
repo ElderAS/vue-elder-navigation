@@ -26,7 +26,6 @@ $states: (
   @include GenerateVariable('border-radius', 3px);
   @include GenerateVariable('text-color', #444);
   @include GenerateVariable('text-color-contrast', white);
-  @include GenerateVariable('navigation-active-color', rgba($primary, 0.1));
 
   @each $state in $states {
     @include GenerateVariable(nth($state, 1), nth($state, 2));

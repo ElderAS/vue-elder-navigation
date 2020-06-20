@@ -83,6 +83,7 @@ export default {
 
 :root {
   @include GenerateVariables();
+  @include GenerateVariable('navigation-active-color', rgba(GetVariable('primary'), 0.1));
 }
 
 .elder__navigation-component {
@@ -96,13 +97,13 @@ export default {
   background-color: transparent;
   text-decoration: none;
   white-space: nowrap;
-  border-radius: var(--vue-elder-border-radius);
-  color: var(--vue-elder-text-color);
+  border-radius: GetVariable('border-radius');
+  color: GetVariable('text-color');
   transition: background-color 150ms ease-in-out;
 
   &:hover,
   &:active {
-    background-color: var(--vue-elder-navigation-active-color);
+    background-color: GetVariable('navigation-active-color');
   }
 
   &-icon-left {
@@ -114,7 +115,7 @@ export default {
   }
 
   &--active {
-    background-color: var(--vue-elder-navigation-active-color);
+    background-color: GetVariable('navigation-active-color');
   }
 
   .elder__navigation--responsive & {
