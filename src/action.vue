@@ -79,7 +79,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import './variables';
+@import './main';
+
+:root {
+  @include GenerateVariables();
+}
 
 .elder__navigation-component {
   display: flex;
@@ -92,13 +96,13 @@ export default {
   background-color: transparent;
   text-decoration: none;
   white-space: nowrap;
-  border-radius: $border-radius;
-  color: $text-color;
+  border-radius: var(--vue-elder-border-radius);
+  color: var(--vue-elder-text-color);
   transition: background-color 150ms ease-in-out;
 
   &:hover,
   &:active {
-    background-color: $elder-navigation-active-color;
+    background-color: var(--vue-elder-navigation-active-color);
   }
 
   &-icon-left {
@@ -110,7 +114,7 @@ export default {
   }
 
   &--active {
-    background-color: $elder-navigation-active-color;
+    background-color: var(--vue-elder-navigation-active-color);
   }
 
   .elder__navigation--responsive & {

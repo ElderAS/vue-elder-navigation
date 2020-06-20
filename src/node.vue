@@ -102,7 +102,7 @@ export default {
   mounted() {
     this.initDropdown()
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     this.destroyDropdown()
   },
   components: {
@@ -113,7 +113,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import './variables';
+@import './main';
+
+:root {
+  @include GenerateVariables();
+}
 
 .elder__navigation {
   &-background {
@@ -122,7 +126,7 @@ export default {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    border-radius: $border-radius;
+    border-radius: var(--vue-elder-border-radius);
 
     .elder__navigation--responsive & {
       display: none;

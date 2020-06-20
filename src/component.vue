@@ -167,7 +167,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import './variables';
+@import './main';
+
+:root {
+  @include GenerateVariables();
+}
 
 .elder__navigation {
   display: flex;
@@ -186,7 +190,7 @@ export default {
   }
 
   &-logo {
-    color: $primary;
+    color: var(--vue-elder-primary);
     font-size: 1.3rem;
     margin-right: auto;
     flex-shrink: 0;
