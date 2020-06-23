@@ -22,6 +22,7 @@
           :style="{ maxHeight: (logo.height || height) + 'px' }"
           @load="onLogoLoad"
           @error="onLogoError"
+          class="elder__navigation-logo-image"
         />
         <div v-if="title && (!logo || logoState === 'error')" class="elder__navigation-logo-fallback">{{ title }}</div>
       </node-component>
@@ -194,6 +195,10 @@ export default {
     font-size: 1.3rem;
     margin-right: auto;
     flex-shrink: 0;
+
+    &-image {
+      max-width: 60vw !important;
+    }
 
     &-fallback {
       line-height: 1;
