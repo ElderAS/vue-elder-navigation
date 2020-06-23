@@ -196,6 +196,10 @@ export default {
     margin-right: auto;
     flex-shrink: 0;
 
+    .elder__navigation-component:before {
+      content: initial;
+    }
+
     &-image {
       max-width: 60vw !important;
     }

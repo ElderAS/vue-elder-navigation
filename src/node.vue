@@ -126,7 +126,7 @@ export default {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    border-radius: var(--vue-elder-border-radius);
+    border-radius: GetVariable('border-radius');
 
     .elder__navigation--responsive & {
       display: none;
