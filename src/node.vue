@@ -139,9 +139,8 @@ export default {
     box-shadow: 0 5px 25px -5px rgba(black, 0.15);
 
     &-wrapper {
-      z-index: 1;
-
       padding-top: 8px;
+      z-index: 2;
     }
 
     &-items {
