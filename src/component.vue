@@ -22,6 +22,7 @@
           :style="{ maxHeight: (logo.height || height) + 'px' }"
           @load="onLogoLoad"
           @error="onLogoError"
+          class="elder__navigation-logo-image"
         />
         <div v-if="title && (!logo || logoState === 'error')" class="elder__navigation-logo-fallback">{{ title }}</div>
       </node-component>
@@ -167,7 +168,11 @@ export default {
 </script>
 
 <style lang="scss">
-@import './variables';
+@import './main';
+
+:root {
+  @include GenerateVariables();
+}
 
 .elder__navigation {
   display: flex;
@@ -186,10 +191,18 @@ export default {
   }
 
   &-logo {
-    color: $primary;
+    color: GetVariable('primary');
     font-size: 1.3rem;
     margin-right: auto;
     flex-shrink: 0;
+
+    .elder__navigation-component:before {
+      content: initial;
+    }
+
+    &-image {
+      max-width: 60vw;
+    }
 
     &-fallback {
       line-height: 1;

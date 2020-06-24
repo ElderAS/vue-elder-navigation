@@ -79,26 +79,50 @@ export default {
 </script>
 
 <style lang="scss">
-@import './variables';
+@import './main';
 
 .elder__navigation-component {
+  font: inherit;
+  font-weight: bold;
+
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   padding: 10px 20px;
-  font: inherit;
-  font-weight: bold;
-  border: none;
-  background-color: transparent;
-  text-decoration: none;
+
   white-space: nowrap;
-  border-radius: $border-radius;
-  color: $text-color;
-  transition: background-color 150ms ease-in-out;
+  text-decoration: none;
+
+  color: GetVariable('text-color');
+  border: none;
+  border-radius: GetVariable('border-radius');
+  background-color: transparent;
+
+  &:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    content: '';
+    transition: opacity 150ms ease-in-out;
+
+    opacity: 0;
+    border-radius: inherit;
+    background-color: GetVariable('primary');
+  }
 
   &:hover,
-  &:active {
-    background-color: $elder-navigation-active-color;
+  &:active,
+  &--active {
+    &:before {
+      opacity: GetVariable('navigation-active-opacity');
+    }
   }
 
   &-icon-left {
@@ -109,17 +133,15 @@ export default {
     margin-left: 15px;
   }
 
-  &--active {
-    background-color: $elder-navigation-active-color;
-  }
-
   .elder__navigation--responsive & {
     justify-content: flex-start;
+
     width: 100%;
   }
 
   .elder__navigation-logo & {
     padding: 0;
+
     background-color: transparent !important;
   }
 }
