@@ -185,16 +185,21 @@ export default {
   &-wrapper {
     &:not(&--calculated) {
       position: fixed;
-      transform: translateY(-100%);
+
       flex-wrap: nowrap;
+
+      transform: translateY(-100%);
     }
   }
 
   &-logo {
-    color: GetVariable('primary');
     font-size: 1.3rem;
-    margin-right: auto;
+
     flex-shrink: 0;
+
+    margin-right: auto;
+
+    color: GetVariable('primary');
 
     .elder__navigation-component:before {
       content: initial;
@@ -226,8 +231,10 @@ export default {
 
     .elder__navigation--responsive & {
       display: none;
+
       width: calc(100% + 10px);
       margin-top: 20px;
+
       animation: slideDown 150ms ease-in;
 
       & > * {
@@ -236,8 +243,9 @@ export default {
 
       @keyframes slideDown {
         0% {
-          opacity: 0;
           transform: translateY(-20px);
+
+          opacity: 0;
         }
       }
     }

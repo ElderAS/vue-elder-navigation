@@ -123,10 +123,11 @@ export default {
   &-background {
     width: 200px;
     margin-left: 10px;
+
+    border-radius: GetVariable('border-radius');
+    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
-    border-radius: GetVariable('border-radius');
 
     .elder__navigation--responsive & {
       display: none;
@@ -134,14 +135,17 @@ export default {
   }
 
   &-dropdown {
-    background-color: white;
-    box-shadow: 0 5px 25px -5px rgba(black, 0.15);
-    min-width: 200px;
     display: flex;
 
+    min-width: 200px;
+
+    background-color: white;
+    box-shadow: 0 5px 25px -5px rgba(black, 0.15);
+
     &-wrapper {
-      padding-top: 8px;
       z-index: 1;
+
+      padding-top: 8px;
     }
 
     &-items {
@@ -156,6 +160,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+
       padding: 10px;
     }
 
@@ -165,6 +170,7 @@ export default {
 
     &-children {
       font-size: 0.8em;
+
       padding-left: 1rem;
 
       .elder__navigation-component {
