@@ -201,7 +201,7 @@ export default {
     }
 
     &-image {
-      max-width: 60vw !important;
+      max-width: 60vw;
     }
 
     &-fallback {
