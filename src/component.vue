@@ -168,17 +168,7 @@ export default {
 </script>
 
 <style lang="scss">
-$variables: (
-  'primary': #3a9acd,
-  'border-radius': 3px,
-  'text-color': #444,
-  'text-color-contrast': white,
-  'navigation-active-opacity': 0.1,
-);
-
-@function GetVariable($key) {
-  @return var(--vue-elder-#{$key}, map-get($variables, $key));
-}
+@import './main';
 
 .elder__navigation {
   display: flex;
