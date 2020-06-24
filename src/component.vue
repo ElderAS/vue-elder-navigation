@@ -170,10 +170,6 @@ export default {
 <style lang="scss">
 @import './main';
 
-:root {
-  @include GenerateVariables();
-}
-
 .elder__navigation {
   display: flex;
   align-items: center;

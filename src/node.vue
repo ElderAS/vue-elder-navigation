@@ -115,10 +115,6 @@ export default {
 <style lang="scss">
 @import './main';
 
-:root {
-  @include GenerateVariables();
-}
-
 .elder__navigation {
   &-background {
     width: 200px;

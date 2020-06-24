@@ -1,18 +1,11 @@
-//Colors
-$primary: #3a9acd !default;
+$variables: (
+  'primary': #3a9acd,
+  'border-radius': 3px,
+  'text-color': #444,
+  'text-color-contrast': white,
+  'navigation-active-opacity': 0.1,
+);
 
 @function GetVariable($key) {
-  @return var(--vue-elder-#{$key});
-}
-
-@mixin GenerateVariable($key, $value) {
-  --vue-elder-#{$key}: #{$value};
-}
-
-@mixin GenerateVariables {
-  @include GenerateVariable('border-radius', 3px);
-  @include GenerateVariable('text-color', #444);
-  @include GenerateVariable('text-color-contrast', white);
-  @include GenerateVariable('navigation-active-opacity', 0.1);
-  @include GenerateVariable('primary', $primary);
+  @return var(--vue-elder-#{$key}, map-get($variables, $key));
 }
