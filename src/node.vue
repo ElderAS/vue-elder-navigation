@@ -81,7 +81,7 @@
 <script>
 import ActionComponent from './action'
 import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
-import { DropdownComponent } from '/Users/sigve/Development/vue-elder/vue-elder-dropdown'
+import { DropdownComponent } from 'vue-elder-dropdown'
 
 export default {
   name: 'elder-node-component',
