@@ -33,48 +33,6 @@
         @click="$emit('click')"
       />
     </div>
-    <!-- <div class="elder__navigation-node-wrapper" @mouseover="onMouseover" @mouseleave="onMouseleave">
-      <action-component ref="target" v-bind="item" @click="$emit('click')">
-        <slot></slot>
-      </action-component>
-      <div
-        class="elder__navigation-node-subitems-trigger"
-        v-show="hasSubitems && isResponsive"
-        @click.stop="showSubitems = !showSubitems"
-      >
-        <fa v-bind="showSubitems ? iconList.collapse : iconList.expand"></fa>
-      </div>
-
-      <div v-show="instance && hasSubitems && showSubitems" ref="dropdown" class="elder__navigation-dropdown-wrapper">
-        <DropdownComponent class="elder__navigation-dropdown">
-
-          <template #dropdown>
-            <div class="elder__navigation-dropdown-items">
-              <action-component
-                v-for="(item, index) in item.items"
-                :key="index"
-                v-bind="item"
-                @click="$emit('click')"
-              />
-            </div>
-            <div
-              v-show="item.background"
-              class="elder__navigation-background"
-              :style="{ backgroundImage: 'url(' + item.background + ')' }"
-            ></div>
-          </template>
-        </DropdownComponent>
-      </div>
-    </div>
-
-    <div v-show="hasSubitems && isResponsive && showSubitems" class="elder__navigation-node-children">
-      <action-component
-        v-for="(item, index) in item.items"
-        :key="'children_' + index"
-        v-bind="item"
-        @click="$emit('click')"
-      />
-    </div> -->
   </div>
 </template>
 
@@ -137,12 +95,6 @@ export default {
     display: flex;
 
     background-color: white;
-
-    &-wrapper {
-      z-index: 1;
-
-      padding-top: 8px;
-    }
 
     &-items {
       display: flex;
