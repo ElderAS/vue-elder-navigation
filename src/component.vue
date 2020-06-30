@@ -119,6 +119,7 @@ export default {
       this.init()
     },
     calculate() {
+      if (!['items'].map((key) => this.$refs[key]).every(Boolean)) return
       if (this.breakAt) return
 
       this.minWidth = null
@@ -133,6 +134,7 @@ export default {
       })
     },
     observe() {
+      if (!['items'].map((key) => this.$refs[key]).every(Boolean)) return
       if (this.breakAt) return
 
       this.observer = new MutationObserver((list) => {
