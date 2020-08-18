@@ -65,6 +65,11 @@ export default {
     title: String,
     breakAt: Number,
     action: [Object, String, Function],
+    dropdownTrigger: {
+      type: String,
+      default: 'hover',
+      enum: ['hover', 'click'],
+    },
     items: {
       type: Array,
       default: () => [],
@@ -77,6 +82,7 @@ export default {
   provide() {
     return {
       iconList: this.iconList,
+      dropdownTrigger: this.dropdownTrigger,
     }
   },
   data() {

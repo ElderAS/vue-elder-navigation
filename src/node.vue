@@ -1,6 +1,6 @@
 <template>
   <div v-show="item.show !== false" class="elder__navigation-node">
-    <DropdownComponent trigger="hover" class="elder__navigation-dropdown">
+    <DropdownComponent :trigger="dropdownTrigger" class="elder__navigation-dropdown">
       <template #default>
         <action-component ref="target" v-bind="item" @click="$emit('click')">
           <slot></slot>
@@ -43,7 +43,7 @@ import { DropdownComponent } from 'vue-elder-dropdown'
 
 export default {
   name: 'elder-node-component',
-  inject: ['iconList'],
+  inject: ['iconList', 'dropdownTrigger'],
   props: {
     item: Object,
   },
