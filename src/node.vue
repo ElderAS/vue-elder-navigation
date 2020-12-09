@@ -94,8 +94,6 @@ export default {
   &-dropdown {
     display: flex;
 
-    background-color: white;
-
     &-items {
       display: flex;
       flex-direction: column;
