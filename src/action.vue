@@ -99,31 +99,43 @@ export default {
   color: GetVariable('text-color');
   border: none;
   border-radius: GetVariable('border-radius');
-  background-color: transparent;
+  background: transparent;
+  transition: background 150ms ease-out;
 
-  &:before {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    content: '';
-    transition: opacity 150ms ease-in-out;
-
-    opacity: 0;
-    border-radius: inherit;
-    background-color: GetVariable('primary');
+  &:hover {
+    background: rgba(black, 0.05);
   }
 
-  &:hover,
   &:active,
   &--active {
-    &:before {
-      opacity: GetVariable('navigation-active-opacity');
-    }
+    background: rgba(black, GetVariable('navigation-active-opacity'));
   }
+
+  // @media (hover) {
+  //   &:before {
+  //     position: absolute;
+  //     top: 0;
+  //     left: 0;
+
+  //     width: 100%;
+  //     height: 100%;
+
+  //     content: '';
+  //     transition: opacity 150ms ease-in-out;
+
+  //     opacity: 0;
+  //     border-radius: inherit;
+  //     background-color: GetVariable('primary');
+  //   }
+
+  //   &:hover,
+  //   &:active,
+  //   &--active {
+  //     &:before {
+  //       opacity: GetVariable('navigation-active-opacity');
+  //     }
+  //   }
+  // }
 
   &-icon-left {
     margin-right: 15px;
