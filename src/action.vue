@@ -111,32 +111,6 @@ export default {
     background: rgba(black, GetVariable('navigation-active-opacity'));
   }
 
-  // @media (hover) {
-  //   &:before {
-  //     position: absolute;
-  //     top: 0;
-  //     left: 0;
-
-  //     width: 100%;
-  //     height: 100%;
-
-  //     content: '';
-  //     transition: opacity 150ms ease-in-out;
-
-  //     opacity: 0;
-  //     border-radius: inherit;
-  //     background-color: GetVariable('primary');
-  //   }
-
-  //   &:hover,
-  //   &:active,
-  //   &--active {
-  //     &:before {
-  //       opacity: GetVariable('navigation-active-opacity');
-  //     }
-  //   }
-  // }
-
   &-icon-left {
     margin-right: 15px;
   }
