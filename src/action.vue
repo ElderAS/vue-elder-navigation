@@ -102,8 +102,10 @@ export default {
   background: transparent;
   transition: background 150ms ease-out;
 
-  &:hover {
-    background: rgba(black, 0.05);
+  @media (hover) {
+    &:hover {
+      background: rgba(black, 0.05);
+    }
   }
 
   &:active,

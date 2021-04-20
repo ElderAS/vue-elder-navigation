@@ -145,7 +145,6 @@ export default {
 
       this.observer = new MutationObserver((list) => {
         if (!list.length) return
-        console.log('mutation')
         this.calculate()
       })
 
