@@ -13,7 +13,7 @@
       }"
       :style="{ padding: this.padding }"
     >
-      <node-component ref="logo" :item="{ action: this.action }" class="elder__navigation-logo" @click="isOpen = false">
+      <node-component ref="logo" :item="{ action: this.action }" class="elder__navigation-logo" @click="toggleExpand">
         <img
           v-if="logo && logoState !== 'error'"
           ref="img"
@@ -27,13 +27,13 @@
         <div v-if="title && (!logo || logoState === 'error')" class="elder__navigation-logo-fallback">{{ title }}</div>
       </node-component>
 
-      <div class="elder__navigation-bars" @click="isOpen = !isOpen">
+      <div class="elder__navigation-bars" @click="toggleExpand">
         <fa v-bind="isOpen ? iconList.menuClose : iconList.menu"></fa>
       </div>
 
       <div class="elder__navigation-actions" ref="items">
         <slot name="before" />
-        <node-component v-for="(item, index) in items" :key="index" :item="item" @click="isOpen = false" />
+        <node-component v-for="(item, index) in items" :key="index" :item="item" @click="toggleExpand" />
         <slot />
       </div>
     </nav>
@@ -78,6 +78,18 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    _isOpen: {
+      type: Boolean,
+      default: false,
+    },
+  },
+  watch: {
+    _isOpen: {
+      handler(val) {
+        this.isOpen = val
+      },
+      immediate: true,
+    },
   },
   provide() {
     return {
@@ -112,6 +124,10 @@ export default {
     },
   },
   methods: {
+    toggleExpand() {
+      this.isOpen = !this.isOpen
+      this.$emit('update:_isOpen', this.isOpen)
+    },
     init() {
       this.calculate()
       this.observe()
