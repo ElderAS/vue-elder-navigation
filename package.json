@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"no test specified\"",
-    "travis-deploy-once": "travis-deploy-once",
-    "semantic-release": "semantic-release"
+    "semantic-release": "dotenv semantic-release"
   },
   "repository": {
     "type": "git",
@@ -25,13 +24,11 @@
     "vue-elder-dropdown": "^1.2.0"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^2.1.0",
-    "travis-deploy-once": "^5.0.7",
-    "semantic-release": "^15.9.15",
     "@babel/core": "^7.0.1",
     "@babel/preset-env": "^7.0.0",
     "babel-loader": "^8.0.2",
     "css-loader": "^1.0.0",
+    "cz-conventional-changelog": "^2.1.0",
     "mini-css-extract-plugin": "^0.4.2",
     "node-sass": "^4.9.3",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
@@ -40,7 +37,11 @@
     "vue-loader": "^15.4.2",
     "vue-template-compiler": "^2.5.17",
     "webpack": "^4.19.0",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "dotenv": "^8.2.0",
+    "dotenv-cli": "^3.2.0",
+    "semantic-release": "^17.1.1",
+    "semantic-release-cli": "^5.4.0"
   },
   "config": {
     "commitizen": {
