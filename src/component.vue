@@ -8,12 +8,12 @@
       class="elder__navigation"
       ref="nav"
       :class="{
-        'elder__navigation--expanded': isOpen,
+        'elder__navigation--expanded': internalOpen,
         'elder__navigation--responsive': isResponsive,
       }"
       :style="{ padding: this.padding }"
     >
-      <node-component ref="logo" :item="{ action: this.action }" class="elder__navigation-logo" @click="isOpen = false">
+      <node-component ref="logo" :item="{ action: this.action }" class="elder__navigation-logo" @click="toggle(false)">
         <img
           v-if="logo && logoState !== 'error'"
           ref="img"
@@ -27,13 +27,13 @@
         <div v-if="title && (!logo || logoState === 'error')" class="elder__navigation-logo-fallback">{{ title }}</div>
       </node-component>
 
-      <div class="elder__navigation-bars" @click="isOpen = !isOpen">
-        <fa v-bind="isOpen ? iconList.menuClose : iconList.menu"></fa>
+      <div class="elder__navigation-bars" @click="toggle()">
+        <fa v-bind="internalOpen ? iconList.menuClose : iconList.menu"></fa>
       </div>
 
       <div class="elder__navigation-actions" ref="items">
         <slot name="before" />
-        <node-component v-for="(item, index) in items" :key="index" :item="item" @click="isOpen = false" />
+        <node-component v-for="(item, index) in items" :key="index" :item="item" @click="toggle(false)" />
         <slot />
       </div>
     </nav>
@@ -78,6 +78,15 @@ export default {
       type: Object,
       default: () => ({}),
     },
+    isOpen: Boolean,
+  },
+  watch: {
+    isOpen: {
+      handler(val) {
+        this.internalOpen = Boolean(val)
+      },
+      immediate: true,
+    },
   },
   provide() {
     return {
@@ -87,7 +96,7 @@ export default {
   },
   data() {
     return {
-      isOpen: false,
+      internalOpen: false,
       minWidth: null,
       width: null,
       observer: null,
@@ -112,6 +121,10 @@ export default {
     },
   },
   methods: {
+    toggle(state) {
+      this.internalOpen = state === undefined ? !this.internalOpen : state
+      this.$emit('update:isOpen', this.internalOpen)
+    },
     init() {
       this.calculate()
       this.observe()
