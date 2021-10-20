@@ -191,6 +191,8 @@ export default {
 @import './main';
 
 .elder__navigation {
+  max-height: 100vh;
+  overflow-y: auto;
   display: flex;
   align-items: center;
 
