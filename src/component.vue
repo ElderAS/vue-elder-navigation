@@ -138,7 +138,7 @@ export default {
       this.init()
     },
     calculate() {
-      if (!['items'].map((key) => this.$refs[key]).every(Boolean)) return
+      if (!['items'].map(key => this.$refs[key]).every(Boolean)) return
       if (this.breakAt) return
 
       this.minWidth = null
@@ -153,10 +153,10 @@ export default {
       })
     },
     observe() {
-      if (!['items'].map((key) => this.$refs[key]).every(Boolean)) return
+      if (!['items'].map(key => this.$refs[key]).every(Boolean)) return
       if (this.breakAt) return
 
-      this.observer = new MutationObserver((list) => {
+      this.observer = new MutationObserver(list => {
         if (!list.length) return
         this.calculate()
       })
@@ -191,13 +191,13 @@ export default {
 @import './main';
 
 .elder__navigation {
-  max-height: 100vh;
-  overflow-y: auto;
   display: flex;
   align-items: center;
 
   &--responsive {
     flex-wrap: wrap;
+    max-height: 100vh;
+    overflow-y: auto;
   }
 
   &-wrapper {
