@@ -225,6 +225,7 @@ export default {
 
     &-image {
       max-width: 60vw;
+      width: 100%;
     }
 
     &-fallback {
