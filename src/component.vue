@@ -138,7 +138,7 @@ export default {
       this.init()
     },
     calculate() {
-      if (!['items'].map(key => this.$refs[key]).every(Boolean)) return
+      if (!['items'].map((key) => this.$refs[key]).every(Boolean)) return
       if (this.breakAt) return
 
       this.minWidth = null
@@ -153,10 +153,10 @@ export default {
       })
     },
     observe() {
-      if (!['items'].map(key => this.$refs[key]).every(Boolean)) return
+      if (!['items'].map((key) => this.$refs[key]).every(Boolean)) return
       if (this.breakAt) return
 
-      this.observer = new MutationObserver(list => {
+      this.observer = new MutationObserver((list) => {
         if (!list.length) return
         this.calculate()
       })
@@ -226,6 +226,8 @@ export default {
     &-image {
       max-width: 60vw;
       width: 100%;
+      object-fit: contain;
+      object-position: left;
     }
 
     &-fallback {
