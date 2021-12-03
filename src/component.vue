@@ -227,6 +227,7 @@ export default {
       max-width: 60vw;
       width: 100%;
       object-fit: contain;
+      object-position: left;
     }
 
     &-fallback {
