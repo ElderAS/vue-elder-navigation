@@ -256,7 +256,7 @@ export default {
       width: calc(100% + 10px);
       margin-top: 20px;
 
-      animation: slideDown 150ms ease-in;
+      animation: slideDown 150ms ease-out;
 
       & > * {
         margin-left: 0;
