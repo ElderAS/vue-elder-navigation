@@ -1,6 +1,10 @@
 <template>
   <div v-show="item.show !== false" class="elder__navigation-node">
-    <DropdownComponent :trigger="dropdownTrigger" class="elder__navigation-dropdown">
+    <DropdownComponent
+      v-if="hasSubitems"
+      :trigger="dropdownTrigger"
+      class="elder__navigation-dropdown"
+    >
       <template #default>
         <action-component ref="target" v-bind="item" @click="$emit('click')">
           <slot></slot>
@@ -14,18 +18,22 @@
         </div>
       </template>
       <template v-if="!isResponsive" #dropdown>
-        <div class="elder__navigation-dropdown-items">
-          <action-component v-for="(item, index) in item.items" :key="index" v-bind="item" @click="$emit('click')" />
-        </div>
-        <div
-          v-show="item.background"
-          class="elder__navigation-background"
-          :style="{ backgroundImage: 'url(' + item.background + ')' }"
-        ></div>
+        <action-component
+          v-for="(item, index) in item.items"
+          :key="index"
+          v-bind="item"
+          @click="$emit('click')"
+        />
       </template>
     </DropdownComponent>
+    <action-component v-else v-bind="item" @click="$emit('click')">
+      <slot></slot>
+    </action-component>
 
-    <div v-show="hasSubitems && isResponsive && showSubitems" class="elder__navigation-node-children">
+    <div
+      v-show="hasSubitems && isResponsive && showSubitems"
+      class="elder__navigation-node-children"
+    >
       <action-component
         v-for="(item, index) in item.items"
         :key="'children_' + index"
@@ -74,33 +82,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import './main';
+@import "./main";
 
 .elder__navigation {
-  &-background {
-    width: 200px;
-    margin-left: 10px;
-
-    border-radius: GetVariable('border-radius');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-
-    .elder__navigation--responsive & {
-      display: none;
-    }
-  }
-
-  &-dropdown {
-    display: flex;
-
-    &-items {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-  }
-
   &-node {
     &-subitems-trigger {
       display: flex;
