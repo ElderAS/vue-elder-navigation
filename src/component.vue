@@ -27,6 +27,8 @@
         <div v-if="title && (!logo || logoState === 'error')" class="elder__navigation-logo-fallback">{{ title }}</div>
       </node-component>
 
+      <slot name="center" />
+
       <div class="elder__navigation-bars" @click="toggle()">
         <fa v-bind="internalOpen ? iconList.menuClose : iconList.menu"></fa>
       </div>
@@ -193,6 +195,7 @@ export default {
 .elder__navigation {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 
   &--responsive {
     flex-wrap: wrap;
@@ -214,8 +217,6 @@ export default {
     font-size: 1.3rem;
 
     flex-shrink: 0;
-
-    margin-right: auto;
 
     color: GetVariable('primary');
 
