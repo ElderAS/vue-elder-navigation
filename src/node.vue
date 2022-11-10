@@ -17,13 +17,13 @@
           <fa v-bind="showSubitems ? iconList.collapse : iconList.expand"></fa>
         </div>
       </template>
-      <template v-if="!isResponsive" #dropdown>
-        <action-component
-          v-for="(item, index) in item.items"
-          :key="index"
-          v-bind="item"
-          @click="$emit('click')"
-        />
+      <template #dropdown>
+          <action-component
+            v-for="(item, index) in item.items"
+            :key="index"
+            v-bind="item"
+            @click="$emit('click')"
+          />
       </template>
     </DropdownComponent>
     <action-component v-else v-bind="item" @click="$emit('click')">
@@ -85,6 +85,10 @@ export default {
 @import "./main";
 
 .elder__navigation {
+  &--responsive .elder__navigation-node .elder-dropdown__wrapper{
+    display: none;
+  }
+
   &-node {
     &-subitems-trigger {
       display: flex;
