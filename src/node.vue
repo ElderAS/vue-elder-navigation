@@ -3,6 +3,7 @@
     <DropdownComponent
       v-if="hasSubitems"
       :trigger="dropdownTrigger"
+      :placement="item.placement"
       class="elder__navigation-dropdown"
     >
       <template #default>
