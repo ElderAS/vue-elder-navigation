@@ -1,5 +1,5 @@
 <template>
-  <div v-show="item.show !== false" class="elder__navigation-node" :id="item.id || item.order">
+  <div v-show="item.show !== false" class="elder__navigation-node" :data-id="item.id || ''">
     <DropdownComponent
       v-if="hasSubitems"
       :trigger="dropdownTrigger"
