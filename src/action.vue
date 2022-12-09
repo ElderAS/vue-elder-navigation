@@ -12,7 +12,7 @@
   >
     <slot>
       <fa v-if="icon && alignment === 'left'" v-bind="iconComp" class="elder__navigation-component-icon-left"></fa>
-      <div v-html="label"></div>
+      <span v-html="label"></span>
       <fa v-if="icon && alignment === 'right'" v-bind="iconComp" class="elder__navigation-component-icon-right"></fa>
     </slot>
   </component>
