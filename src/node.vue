@@ -1,5 +1,5 @@
 <template>
-  <div v-show="item.show !== false" class="elder__navigation-node">
+  <div v-show="item.show !== false" class="elder__navigation-node" :data-id="item.id || ''">
     <DropdownComponent
       v-if="hasSubitems"
       :trigger="dropdownTrigger"
@@ -19,22 +19,14 @@
         </div>
       </template>
       <template #dropdown>
-          <action-component
-            v-for="(item, index) in item.items"
-            :key="index"
-            v-bind="item"
-            @click="$emit('click')"
-          />
+        <action-component v-for="(item, index) in item.items" :key="index" v-bind="item" @click="$emit('click')" />
       </template>
     </DropdownComponent>
     <action-component v-else v-bind="item" @click="$emit('click')">
       <slot></slot>
     </action-component>
 
-    <div
-      v-show="hasSubitems && isResponsive && showSubitems"
-      class="elder__navigation-node-children"
-    >
+    <div v-show="hasSubitems && isResponsive && showSubitems" class="elder__navigation-node-children">
       <action-component
         v-for="(item, index) in item.items"
         :key="'children_' + index"
@@ -83,10 +75,10 @@ export default {
 </script>
 
 <style lang="scss">
-@import "./main";
+@import './main';
 
 .elder__navigation {
-  &--responsive .elder__navigation-node .elder-dropdown__wrapper{
+  &--responsive .elder__navigation-node .elder-dropdown__wrapper {
     display: none;
   }
 
