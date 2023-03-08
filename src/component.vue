@@ -217,6 +217,9 @@ export default {
     font-size: 1.3rem;
 
     flex-shrink: 0;
+    flex-grow: 1;
+    align-self: stretch;
+    display: flex;
 
     color: GetVariable('primary');
 
@@ -233,6 +236,11 @@ export default {
 
     &-fallback {
       line-height: 1;
+    }
+
+    .elder__navigation-component {
+      flex-grow: 1;
+      min-width: 150px;
     }
   }
 
