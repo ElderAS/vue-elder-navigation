@@ -240,6 +240,7 @@ export default {
 
     .elder__navigation-component {
       flex-grow: 1;
+      min-width: 150px;
     }
   }
 
