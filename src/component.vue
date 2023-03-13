@@ -151,7 +151,9 @@ export default {
         let padding = [computedStyle.paddingRight, computedStyle.paddingLeft]
           .map(parseFloat)
           .reduce((r, c) => (r += c), 0)
-        this.minWidth = Math.ceil(actionWidth + logoWidth + padding) + 50
+        this.minWidth =
+          Math.min(Math.ceil(actionWidth + logoWidth + padding), this.$el.parentElement.getBoundingClientRect().width) +
+          50
       })
     },
     observe() {
@@ -166,7 +168,7 @@ export default {
       this.observer.observe(this.$refs.items, { childList: true })
     },
     setWidth() {
-      this.width = window.innerWidth
+      this.width = this.$el.parentElement.getBoundingClientRect().width
     },
   },
   mounted() {
