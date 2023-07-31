@@ -3,7 +3,7 @@
     :is="type"
     v-bind="{
       to: action,
-      activeClass,
+      ...routerLinkClasses,
       ...$attrs,
     }"
     :class="classes"
@@ -37,8 +37,20 @@ export default {
       type: String,
       default: 'elder__navigation-component--active',
     },
+    exact: {
+      type: Boolean,
+      default: false,
+    },
+    exactActiveClass: {
+      type: String,
+      default: 'elder__navigation-component--exact-active',
+    },
   },
   computed: {
+    routerLinkClasses() {
+      if (this.exact) return { exactActiveClass: this.exactActiveClass }
+      return { activeClass: this.activeClass }
+    },
     type() {
       switch (typeof this.action) {
         case 'string':
@@ -109,6 +121,7 @@ export default {
   }
 
   &:active,
+  &--exact-active,
   &--active {
     background: rgba(black, GetVariable('navigation-active-opacity'));
   }
