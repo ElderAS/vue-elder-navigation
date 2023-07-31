@@ -1,11 +1,11 @@
 {
   "name": "vue-elder-navigation",
-  "version": "0.0.0-development",
+  "version": "1.10.4",
   "description": "Vue navigation component for elder",
   "main": "index.js",
   "scripts": {
     "test": "echo \"no test specified\"",
-    "semantic-release": "dotenv semantic-release"
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
@@ -24,10 +24,8 @@
     "vue-elder-dropdown": "^1.2.0"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^2.1.0",
-    "dotenv": "^8.2.0",
-    "dotenv-cli": "^3.2.0",
-    "semantic-release": "^17.1.1",
+    "cz-conventional-changelog": "^3.3.0",
+    "semantic-release": "^17.2.1",
     "semantic-release-cli": "^5.4.0"
   },
   "config": {
