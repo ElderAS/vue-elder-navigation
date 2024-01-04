@@ -7,7 +7,11 @@
       class="elder__navigation-dropdown"
     >
       <template #default>
-        <action-component ref="target" v-bind="item" @click="$emit('click')">
+        <action-component
+          ref="target"
+          v-bind="item"
+          @click="isResponsive ? (showSubitems = !showSubitems) : $emit('click')"
+        >
           <slot></slot>
         </action-component>
         <div
