@@ -30,7 +30,7 @@
       <slot name="center" />
 
       <div class="elder__navigation-bars" @click="toggle()">
-        <fa v-bind="internalOpen ? iconList.menuClose : iconList.menu"></fa>
+        <Icon v-bind="internalOpen ? iconList.menuClose : iconList.menu" />
       </div>
 
       <div class="elder__navigation-actions" ref="items">
@@ -43,8 +43,7 @@
 </template>
 
 <script>
-import './icons'
-import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
+import Icon from '@kvass/vue2-icon/src/Legacy'
 import { Options } from '../index'
 import NodeComponent from './node.vue'
 import { throttle, iconBinding } from './utils'
@@ -186,7 +185,7 @@ export default {
   },
   components: {
     NodeComponent,
-    Fa,
+    Icon,
   },
 }
 </script>

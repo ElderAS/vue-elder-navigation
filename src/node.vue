@@ -19,7 +19,7 @@
           v-show="hasSubitems && isResponsive"
           @click.stop="showSubitems = !showSubitems"
         >
-          <fa v-bind="showSubitems ? iconList.collapse : iconList.expand"></fa>
+          <Icon v-bind="showSubitems ? iconList.collapse : iconList.expand" />
         </div>
       </template>
       <template #dropdown>
@@ -43,7 +43,7 @@
 
 <script>
 import ActionComponent from './action'
-import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
+import Icon from '@kvass/vue2-icon/src/Legacy'
 import { DropdownComponent } from 'vue-elder-dropdown'
 
 export default {
@@ -72,7 +72,7 @@ export default {
   },
   components: {
     ActionComponent,
-    Fa,
+    Icon,
     DropdownComponent,
   },
 }
