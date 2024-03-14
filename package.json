@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/ElderAS/vue-elder-navigation#readme",
   "dependencies": {
-    "@kvass/vue2-icon": "^1.0.2",
+    "@kvass/vue2-icon": "^1.0.3",
     "vue-elder-dropdown": "^1.2.0"
   },
   "devDependencies": {

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import Icon from '@kvass/vue2-icon/src/Legacy'
+import Icon from '@kvass/vue2-icon'
 import { Options } from '../index'
 import NodeComponent from './node.vue'
 import { throttle, iconBinding } from './utils'

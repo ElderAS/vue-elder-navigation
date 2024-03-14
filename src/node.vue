@@ -43,7 +43,7 @@
 
 <script>
 import ActionComponent from './action'
-import Icon from '@kvass/vue2-icon/src/Legacy'
+import Icon from '@kvass/vue2-icon'
 import { DropdownComponent } from 'vue-elder-dropdown'
 
 export default {

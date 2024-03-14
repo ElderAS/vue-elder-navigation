@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import Icon from '@kvass/vue2-icon/src/Legacy'
+import Icon from '@kvass/vue2-icon'
 import AnchorComponent from './action-types/anchor'
 import ButtonComponent from './action-types/button'
 import { iconBinding } from './utils'
