@@ -11,15 +11,15 @@
     @click.native="onClick"
   >
     <slot>
-      <fa v-if="icon && alignment === 'left'" v-bind="iconComp" class="elder__navigation-component-icon-left"></fa>
+      <Icon v-if="icon && alignment === 'left'" v-bind="iconComp" class="elder__navigation-component-icon-left" />
       <span v-html="label"></span>
-      <fa v-if="icon && alignment === 'right'" v-bind="iconComp" class="elder__navigation-component-icon-right"></fa>
+      <Icon v-if="icon && alignment === 'right'" v-bind="iconComp" class="elder__navigation-component-icon-right" />
     </slot>
   </component>
 </template>
 
 <script>
-import { FontAwesomeIcon as Fa } from '@fortawesome/vue-fontawesome'
+import Icon from '@kvass/vue2-icon'
 import AnchorComponent from './action-types/anchor'
 import ButtonComponent from './action-types/button'
 import { iconBinding } from './utils'
@@ -85,7 +85,7 @@ export default {
     },
   },
   components: {
-    Fa,
+    Icon,
   },
 }
 </script>

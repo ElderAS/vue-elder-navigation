@@ -18,9 +18,7 @@
   },
   "homepage": "https://github.com/ElderAS/vue-elder-navigation#readme",
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.26",
-    "@fortawesome/free-solid-svg-icons": "^5.12.0",
-    "@fortawesome/vue-fontawesome": "^0.1.9",
+    "@kvass/vue2-icon": "^1.0.3",
     "vue-elder-dropdown": "^1.2.0"
   },
   "devDependencies": {
